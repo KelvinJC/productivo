@@ -1,5 +1,6 @@
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
+import 'package:todo/components/todo_list_row.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -10,93 +11,98 @@ class HomePage extends StatelessWidget {
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
         backgroundColor: Colors.grey[200],
-        leading: Icon(
-            color: Colors.black,
-            Icons.menu),
+        leading: const Padding(
+          padding: EdgeInsets.only(left: 20.0),
+          child: CircleAvatar(
+            radius: 50,
+            backgroundImage: AssetImage('assets/images/beach3.png'),
+          ),
+        ),
         actions: [
           Padding(
-            padding: EdgeInsets.only(right: 20.0),
-            child: CircleAvatar(
-              radius: 20,
-              backgroundImage: AssetImage('assets/images/beach3.png'),
+            padding: const EdgeInsets.only(right: 130.0),
+            child: Text(
+              'Hi Kelvin',
+              style: GoogleFonts.montserrat(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold
+              ),
             ),
           ),
+          Icon(
+            color: Colors.grey[600],
+            Icons.notifications_none_outlined,
+            size: 30.0,
+          ),
+          SizedBox(width: 25,),
+          Icon(
+            color: Colors.grey[600],
+            Icons.message_outlined,
+            size: 30.0,
+          ),
+          SizedBox(width: 25,),
+
         ],
       ),
-      body: SingleChildScrollView(
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                      hintText: 'Search',
-                      prefixIcon: Icon(Icons.search),
-                      filled: true,
-                      fillColor: Colors.white70,
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                            width: 1,
-                            color: Colors.white70
-                        ),
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                            width: 1,
-                            color: Colors.white70
-                        ),
-                        borderRadius: BorderRadius.circular(30),
-                      )
-                  ),
-                ),
-              ),
-              Text(
-                'All Todos',
-                style: GoogleFonts.montserrat(
-                    fontSize: 40,
-                    fontWeight: FontWeight.bold
-                ),
-              ),
-              SizedBox(height: 20,),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Container(
-                  height: 50,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    color: Colors.white70,
-
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(),
-                        Text(
-                          'Dinner with Jenny',
-                          style: GoogleFonts.montserrat(
-                            fontSize: 15,
-                          ),
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                              color: Colors.red,
-                              borderRadius: BorderRadius.circular(5)
-                          ),
-                          child: Icon(
-                              color: Colors.white,
-                              Icons.delete
-                          ),
-                        )
-                      ],
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: TextFormField(
+              decoration: InputDecoration(
+                  hintText: 'Search',
+                  prefixIcon: Icon(Icons.search),
+                  filled: true,
+                  fillColor: Colors.white70,
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                        width: 1,
+                        color: Colors.white70
                     ),
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                        width: 1,
+                        color: Colors.white70
+                    ),
+                    borderRadius: BorderRadius.circular(30),
+                  )
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: Row(
+              children: [
+                Text(
+                  'Tasks for you',
+                  style: GoogleFonts.montserrat(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold
                   ),
                 ),
-              )
-            ],
-          )
+              ],
+            ),
+          ),
+          SizedBox(height: 20,),
+          Expanded(
+            child: ListView.separated(
+                padding: EdgeInsets.only(top: 5.0, bottom: 15.0),
+                itemBuilder: (context, index) {
+                  return TodoListRow();
+                },
+                separatorBuilder: (context, index) => Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Divider(
+                    color: Colors.grey[200],
+                  ),
+                ),
+                itemCount: 10
+            ),
+          ),
+
+        ],
       ),
       // body: ,
     );
