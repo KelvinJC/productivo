@@ -17,7 +17,7 @@ class SwitchScreen extends StatelessWidget {
       case Status.Authenticated:
         return HomePage();
       case Status.Unauthenticated:
-        return HomePage(); // RegisterScreen(); // LoginScreen();
+        return LoginScreen();
       case Status.Uninitialised:
         return Scaffold(
           body: Container(
