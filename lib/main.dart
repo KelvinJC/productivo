@@ -5,7 +5,7 @@ import 'package:todo/auth/view_models/auth_view_model.dart';
 import 'package:todo/auth/views/switch_screen.dart';
 import 'package:todo/firebase_options.dart';
 import 'package:todo/homepage.dart';
-import 'package:todo/validation/signup_validation.dart';
+import 'package:todo/validation/view_models/signup_validation.dart';
 
 
 void main() async {
