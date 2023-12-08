@@ -110,6 +110,13 @@ class FirebaseAuthViewModel extends ChangeNotifier {
     return Future.delayed(Duration.zero);
   }
 
+  void printCreds(String pwd, String confPwd ) {
+    if (pwd == confPwd) {
+      print('$pwd, $confPwd');
+    }
+
+  }
+
   }
 
 
