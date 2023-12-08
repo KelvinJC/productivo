@@ -25,7 +25,7 @@ class FirebaseAuthViewModel extends ChangeNotifier {
   // constructor
   FirebaseAuthViewModel() {
     _auth = FirebaseAuth.instance;
-    _auth.authStateChanges().listen(onAuthStateChanged);
+    _auth.authStateChanges().listen(onAuthStateChanged); // subscribe to authentication state changes
   }
 
   // getters
