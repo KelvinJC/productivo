@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:todo/auth/view_models/auth_view_model.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:todo/validation/signup_validation.dart';
 
-class RegisterScreen extends StatelessWidget {
-  const RegisterScreen({super.key});
+class SignUpScreen extends StatelessWidget {
+  const SignUpScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    SignupValidationViewModel validationViewModel = context.watch<SignupValidationViewModel>();
     FirebaseAuthViewModel authViewModel = context.watch<FirebaseAuthViewModel>();
     return Scaffold(
       backgroundColor: Colors.grey[200],
@@ -69,9 +72,23 @@ class RegisterScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: TextFormField(
+                    onChanged: (String value) {
+                      validationViewModel.changePhoneNumber(value);
+                    },
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     decoration: InputDecoration(
-                        hintText: 'Phone number',
-                        prefixIcon: Icon(Icons.local_phone_outlined),
+                        errorText: validationViewModel.phoneNumber.error,
+                        errorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.red),
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.red),
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
+                        hintText: 'Mobile phone',
+                        prefixIcon: Icon(Icons.phone),
                         filled: true,
                         fillColor: Colors.white70,
                         enabledBorder: OutlineInputBorder(
@@ -95,6 +112,12 @@ class RegisterScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: TextFormField(
+                    keyboardType: TextInputType.emailAddress,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(
+                        RegExp(r'^[a-zA-Z0-9_@.]+$'),
+                      ),
+                    ],
                     decoration: InputDecoration(
                         hintText: 'Email',
                         prefixIcon: Icon(Icons.email),
@@ -118,15 +141,37 @@ class RegisterScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 10,),
+                // password
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: TextFormField(
-                    onChanged: (val) async {
-                      authViewModel.user.
+                    obscureText: validationViewModel.isPasswordVisible,
+                    onChanged: (String val) {
+                      validationViewModel.enterPassword(val.trim());
                     },
                     decoration: InputDecoration(
+                        errorText: validationViewModel.passwordError.error,
+                        errorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.red),
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.red),
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
                         hintText: 'Password',
                         prefixIcon: Icon(Icons.key),
+                        suffixIcon: GestureDetector(
+                          onTap: () {
+                            validationViewModel.changePasswordVisibility('pwd');
+                          },
+                          child: Icon(
+                            color: Colors.grey,
+                              validationViewModel.isPasswordVisible
+                                  ? Icons.visibility_off
+                                  : Icons.visibility
+                          ),
+                        ),
                         filled: true,
                         fillColor: Colors.white70,
                         enabledBorder: OutlineInputBorder(
@@ -147,12 +192,37 @@ class RegisterScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 10,),
+                // confirm password
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: TextFormField(
+                    onChanged: (String val) {
+                      validationViewModel.confirmPasswordField(val.trim());
+                    },
+                    obscureText: validationViewModel.isConfirmPasswordVisible,
                     decoration: InputDecoration(
+                        errorText: validationViewModel.confirmPasswordError.error,
+                        errorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.red),
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.red),
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
                         hintText: 'Confirm password',
                         prefixIcon: Icon(Icons.key),
+                        suffixIcon: GestureDetector(
+                          onTap: () {
+                            validationViewModel.changePasswordVisibility('confirm password');
+                          },
+                          child: Icon(
+                            color: Colors.grey,
+                            validationViewModel.isConfirmPasswordVisible
+                                ? Icons.visibility_off
+                                : Icons.visibility
+                          ),
+                        ),
                         filled: true,
                         fillColor: Colors.white70,
                         enabledBorder: OutlineInputBorder(
@@ -177,7 +247,9 @@ class RegisterScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: GestureDetector(
-                    // onTap: signIn,
+                    onTap: () {
+                      authViewModel.printCreds(validationViewModel.password.value!, validationViewModel.confirmPassword.value!);
+                    },
                     child: Container(
                       padding: EdgeInsets.all(20),
                       decoration: BoxDecoration(

@@ -5,6 +5,7 @@ import 'package:todo/auth/view_models/auth_view_model.dart';
 import 'package:todo/auth/views/switch_screen.dart';
 import 'package:todo/firebase_options.dart';
 import 'package:todo/homepage.dart';
+import 'package:todo/validation/signup_validation.dart';
 
 
 void main() async {
@@ -26,7 +27,10 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<FirebaseAuthViewModel>(
             create: (_) => FirebaseAuthViewModel()
-        )
+        ),
+        ChangeNotifierProvider<SignupValidationViewModel>(
+            create: (_) => SignupValidationViewModel()
+        ),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

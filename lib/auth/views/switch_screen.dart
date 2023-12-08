@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:todo/auth/view_models/auth_view_model.dart';
-import 'package:todo/auth/views/register_screen.dart';
+import 'package:todo/auth/views/signup_screen.dart';
 import 'package:todo/homepage.dart';
 import '../models/status.dart';
 import 'package:todo/auth/views/login_screen.dart';
@@ -17,7 +17,7 @@ class SwitchScreen extends StatelessWidget {
       case Status.Authenticated:
         return HomePage();
       case Status.Unauthenticated:
-        return LoginScreen();
+        return SignUpScreen(); // LoginScreen();
       case Status.Uninitialised:
         return Scaffold(
           body: Container(
@@ -33,7 +33,7 @@ class SwitchScreen extends StatelessWidget {
         );
           // SplashScreen();
       default:
-        return RegisterScreen();
+        return SignUpScreen();
     }
   }
 }
