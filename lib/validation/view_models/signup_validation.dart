@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import '../models/validation_item.dart';
+import 'package:todo/validation/models/validation_item.dart';
+import 'package:todo/validation/models/password_validation.dart';
+
 
 class SignupValidationViewModel extends ChangeNotifier {
   ValidationItem _name = ValidationItem(null, null);
