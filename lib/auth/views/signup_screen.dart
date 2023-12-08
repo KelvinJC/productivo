@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:todo/auth/view_models/auth_view_model.dart';
@@ -69,6 +70,8 @@ class RegisterScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: TextFormField(
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     decoration: InputDecoration(
                         hintText: 'Phone number',
                         prefixIcon: Icon(Icons.local_phone_outlined),
@@ -95,6 +98,12 @@ class RegisterScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: TextFormField(
+                    keyboardType: TextInputType.emailAddress,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(
+                        RegExp(r'^[a-zA-Z0-9_@.]+$'),
+                      ),
+                    ],
                     decoration: InputDecoration(
                         hintText: 'Email',
                         prefixIcon: Icon(Icons.email),
@@ -121,8 +130,9 @@ class RegisterScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: TextFormField(
+                    obscureText: true, // make it able to toggle via signup validator
                     onChanged: (val) async {
-                      authViewModel.user.
+                      // authViewModel.user.
                     },
                     decoration: InputDecoration(
                         hintText: 'Password',
@@ -150,6 +160,7 @@ class RegisterScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: TextFormField(
+                    obscureText: true, // make it able to toggle via signup validator
                     decoration: InputDecoration(
                         hintText: 'Confirm password',
                         prefixIcon: Icon(Icons.key),
