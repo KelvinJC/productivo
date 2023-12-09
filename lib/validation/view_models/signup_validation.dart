@@ -13,6 +13,9 @@ class SignupValidationViewModel extends ChangeNotifier {
   PasswordValidationError _confirmPasswordError = PasswordValidationError(null);
   bool _isPasswordVisible = true;
   bool _isConfirmPasswordVisible = true;
+  bool _isSignUpFormValid = false;
+  bool _freezeFields = false;
+
 
   // getters
   ValidationItem get name => _name;
@@ -24,14 +27,18 @@ class SignupValidationViewModel extends ChangeNotifier {
   PasswordValidationError get confirmPasswordError => _confirmPasswordError;
   bool get isPasswordVisible => _isPasswordVisible;
   bool get isConfirmPasswordVisible => _isConfirmPasswordVisible;
+  bool get isSignUpFormValid => _isSignUpFormValid;
+  bool get freezeFields => _freezeFields;
 
-  //setters
+
+  // setters
   void changeName(String val) {
     if (val.length >= 3) {
       _name = ValidationItem(val, null);
     } else {
       _name = ValidationItem(null, "Must be at least 3 characters");
     }
+    changeSignUpFormValid();
     notifyListeners();
   }
 
@@ -43,7 +50,10 @@ class SignupValidationViewModel extends ChangeNotifier {
     } else {
       _phoneNumber = ValidationItem(val, null);
     }
+
+    changeSignUpFormValid();
     notifyListeners();
+
   }
 
   void changeEmail(String val) {
@@ -52,17 +62,26 @@ class SignupValidationViewModel extends ChangeNotifier {
     } else {
       _email = ValidationItem(null, "Invalid format");
     }
+
+    changeSignUpFormValid();
     notifyListeners();
+
   }
 
   void enterPassword(String pwd) {
     _password = ValidatedPassword(pwd);
+
     confirmUserPassword(1, 0);
+    changeSignUpFormValid();
+
   }
 
   void confirmPasswordField(String pwd) {
     _confirmPassword = ValidatedPassword(pwd);
+
     confirmUserPassword(0, 1);
+    changeSignUpFormValid();
+
   }
 
   void confirmUserPassword(int p, int c) {
@@ -106,7 +125,27 @@ class SignupValidationViewModel extends ChangeNotifier {
     } else {
       _isConfirmPasswordVisible = !_isConfirmPasswordVisible;
     }
+    notifyListeners();
+  }
 
+  void changeSignUpFormValid () {
+    if (name.value != null
+      && phoneNumber.value != null
+      && email.value != null
+      && phoneNumber.value != null
+      && password.value != null
+      && password.value == confirmPassword.value
+      && confirmPasswordError.error == null
+    ) {
+      _isSignUpFormValid = true;
+    } else {
+      _isSignUpFormValid = false;
+    }
+    notifyListeners();
+  }
+
+  void freezeAllInputFields () {
+    _freezeFields = true;
     notifyListeners();
   }
 }
