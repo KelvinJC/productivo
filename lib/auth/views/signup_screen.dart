@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -6,13 +7,25 @@ import 'package:todo/auth/view_models/auth_view_model.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:todo/validation/view_models/signup_validation.dart';
 
+import '../models/status.dart';
+
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
+
+  bool passwordMatch(String pwd, String confirmPwd) {
+    if (pwd == confirmPwd) {
+      return true;
+    }
+    return false;
+  }
 
   @override
   Widget build(BuildContext context) {
     SignupValidationViewModel validationViewModel = context.watch<SignupValidationViewModel>();
     FirebaseAuthViewModel authViewModel = context.watch<FirebaseAuthViewModel>();
+    String pwdVal;
+    String confirmPwdVal;
+
     return Scaffold(
       backgroundColor: Colors.grey[200],
       body: SafeArea(
@@ -112,6 +125,9 @@ class SignUpScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: TextFormField(
+                    onChanged: (String val) {
+                      validationViewModel.changeEmail(val.trim());
+                    },
                     keyboardType: TextInputType.emailAddress,
                     inputFormatters: [
                       FilteringTextInputFormatter.allow(
@@ -166,7 +182,7 @@ class SignUpScreen extends StatelessWidget {
                             validationViewModel.changePasswordVisibility('pwd');
                           },
                           child: Icon(
-                            color: Colors.grey,
+                              color: Colors.grey,
                               validationViewModel.isPasswordVisible
                                   ? Icons.visibility_off
                                   : Icons.visibility
@@ -217,10 +233,10 @@ class SignUpScreen extends StatelessWidget {
                             validationViewModel.changePasswordVisibility('confirm password');
                           },
                           child: Icon(
-                            color: Colors.grey,
-                            validationViewModel.isConfirmPasswordVisible
-                                ? Icons.visibility_off
-                                : Icons.visibility
+                              color: Colors.grey,
+                              validationViewModel.isConfirmPasswordVisible
+                                  ? Icons.visibility_off
+                                  : Icons.visibility
                           ),
                         ),
                         filled: true,
@@ -248,7 +264,16 @@ class SignUpScreen extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: GestureDetector(
                     onTap: () {
-                      authViewModel.printCreds(validationViewModel.password.value!, validationViewModel.confirmPassword.value!);
+                      pwdVal = validationViewModel.password.value!;
+                      confirmPwdVal = validationViewModel.confirmPassword.value!;
+
+                      if (pwdVal == confirmPwdVal) {
+                        authViewModel.signUpWithEmailAndPassword(
+                            validationViewModel.email.value!,
+                            validationViewModel.password.value!
+                        );
+                      }
+                      // else show error msg as snack pop or whatever it is called
                     },
                     child: Container(
                       padding: EdgeInsets.all(20),
@@ -257,14 +282,16 @@ class SignUpScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(30),
                       ),
                       child: Center(
-                        child: Text(
+                        child: authViewModel.status == Status.Registering
+                            ? CircularProgressIndicator(color: Colors.white,)
+                            : Text(
                             'Sign Up',
                             style: GoogleFonts.montserrat(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.grey[200]
                             )
-                        ), //  isLoggingIn ? CircularProgressIndicator(color: Colors.white) :
+                        ),
                       ),
                     ),
                   ),
