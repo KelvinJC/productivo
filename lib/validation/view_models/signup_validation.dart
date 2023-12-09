@@ -14,7 +14,7 @@ class SignupValidationViewModel extends ChangeNotifier {
   bool _isPasswordVisible = true;
   bool _isConfirmPasswordVisible = true;
   bool _isSignUpFormValid = false;
-  bool _freezeFields = false;
+  bool _freezeBtnColor = false;
 
 
   // getters
@@ -28,7 +28,7 @@ class SignupValidationViewModel extends ChangeNotifier {
   bool get isPasswordVisible => _isPasswordVisible;
   bool get isConfirmPasswordVisible => _isConfirmPasswordVisible;
   bool get isSignUpFormValid => _isSignUpFormValid;
-  bool get freezeFields => _freezeFields;
+  bool get freezeBtnColor => _freezeBtnColor;
 
 
   // setters
@@ -144,8 +144,8 @@ class SignupValidationViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void freezeAllInputFields () {
-    _freezeFields = true;
+  void freezeSignUpButtonColor () {
+    _freezeBtnColor = true;
     notifyListeners();
   }
 }
