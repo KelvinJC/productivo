@@ -22,8 +22,8 @@ class SignUpScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     SignupValidationViewModel validationViewModel = context.watch<SignupValidationViewModel>();
     FirebaseAuthViewModel authViewModel = context.watch<FirebaseAuthViewModel>();
-    String pwdVal;
-    String confirmPwdVal;
+    bool signUpFormValid = validationViewModel.isSignUpFormValid;
+    bool freezeFields = validationViewModel.freezeBtnColor;
 
     return Scaffold(
       backgroundColor: Colors.grey[200],
@@ -58,6 +58,10 @@ class SignUpScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: TextFormField(
+                    onChanged: (String val) {
+                      validationViewModel.changeName(val.trim());
+                    },
+                    keyboardType: TextInputType.name,
                     decoration: InputDecoration(
                         hintText: 'Name',
                         prefixIcon: Icon(Icons.person),
@@ -85,7 +89,7 @@ class SignUpScreen extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: TextFormField(
                     onChanged: (String value) {
-                      validationViewModel.changePhoneNumber(value);
+                      validationViewModel.changePhoneNumber(value.trim());
                     },
                     keyboardType: TextInputType.number,
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
@@ -263,21 +267,19 @@ class SignUpScreen extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: GestureDetector(
                     onTap: () {
-                      pwdVal = validationViewModel.password.value!;
-                      confirmPwdVal = validationViewModel.confirmPassword.value!;
-
-                      if (pwdVal == confirmPwdVal) {
+                      if (signUpFormValid) {
                         authViewModel.signUpWithEmailAndPassword(
                             validationViewModel.email.value!,
                             validationViewModel.password.value!
                         );
+                        validationViewModel.freezeSignUpButtonColor();
                       }
                       // else show error msg as snack pop or whatever it is called
                     },
                     child: Container(
                       padding: EdgeInsets.all(20),
                       decoration: BoxDecoration(
-                        color: Colors.black,
+                        color: signUpFormValid || freezeFields ? Colors.black : Colors.grey[400],
                         borderRadius: BorderRadius.circular(30),
                       ),
                       child: Center(
