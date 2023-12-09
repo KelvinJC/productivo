@@ -1,13 +1,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:todo/auth/models/status.dart';
 import 'package:todo/auth/view_models/auth_view_model.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:todo/validation/view_models/signup_validation.dart';
-
-import '../models/status.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
