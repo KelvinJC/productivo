@@ -61,6 +61,7 @@ class SignUpScreen extends StatelessWidget {
                     onChanged: (String val) {
                       validationViewModel.changeName(val.trim());
                     },
+                    // enabled: validationViewModel.freezeTextField,  // to disable user input once sign up btn is clicked
                     keyboardType: TextInputType.name,
                     decoration: InputDecoration(
                         hintText: 'Name',
