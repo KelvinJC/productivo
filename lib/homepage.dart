@@ -1,12 +1,19 @@
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo/components/todo_list_row.dart';
+import 'package:todo/validation/view_models/login_validation.dart';
+import 'auth/view_models/auth_view_model.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    FirebaseAuthViewModel authViewModel = context.watch<FirebaseAuthViewModel>();
+    LoginValidationViewModel loginValidationViewModel = context.watch<LoginValidationViewModel>();
+
+
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
@@ -51,7 +58,13 @@ class HomePage extends StatelessWidget {
             child: TextFormField(
               decoration: InputDecoration(
                   hintText: 'Search',
-                  prefixIcon: Icon(Icons.search),
+                  prefixIcon: GestureDetector(
+                    onTap: () {
+                      loginValidationViewModel.changeUserLoggedOut();
+                      authViewModel.signOut();
+                    },
+                    child: Icon(Icons.search)
+                  ),
                   filled: true,
                   fillColor: Colors.white70,
                   enabledBorder: OutlineInputBorder(
