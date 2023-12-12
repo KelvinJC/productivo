@@ -10,6 +10,7 @@ class LoginValidationViewModel extends ChangeNotifier {
   bool _isPasswordVisible = false;
   bool _isLoginFormValid = false;
   bool _freezeButtonColour = false;
+  bool _userLoggedOut = false;
 
 
   // getters
@@ -19,7 +20,7 @@ class LoginValidationViewModel extends ChangeNotifier {
   bool get isPasswordVisible => _isPasswordVisible;
   bool get isLoginFormValid => _isLoginFormValid;
   bool get freezeButtonColour => _freezeButtonColour;
-
+  bool get userLoggedOut => _userLoggedOut;
 
   // setters
   void changeEmail(String val) {
@@ -82,6 +83,11 @@ class LoginValidationViewModel extends ChangeNotifier {
     _passwordError = PasswordValidationError(null);
     _isPasswordVisible = false;
     _changeLoginFormValid();
+    changeFreezeButtonColour();
+  }
+
+  void changeUserLoggedOut() {
+    _userLoggedOut = true;
   }
 
 }
