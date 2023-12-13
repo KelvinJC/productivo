@@ -3,6 +3,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:todo/auth/view_models/auth_view_model.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:todo/validation/view_models/login_validation.dart';
+import 'package:todo/routing/navigation.dart';
+import '../models/status.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -10,6 +13,12 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     FirebaseAuthViewModel authViewModel = context.watch<FirebaseAuthViewModel>();
+    LoginValidationViewModel validationViewModel = context.watch<LoginValidationViewModel>();
+    bool loginFormValid = validationViewModel.isLoginFormValid;
+    bool freezeButtonColour = validationViewModel.freezeButtonColour;
+    bool userLoggedOut = validationViewModel.userLoggedOut;
+
+
     return Scaffold(
       backgroundColor: Colors.grey[200],
       body: SafeArea(
@@ -35,15 +44,18 @@ class LoginScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 10,),
                 Text(
-                    'Welcome back, you\'ve been missed.',
-                    style: TextStyle(
-                      fontSize: 17,
-                    )
+                  userLoggedOut
+                    ? 'Let\'s get you in shall we?'
+                    : 'Welcome back, you\'ve been missed.',
+                  style: TextStyle(fontSize: 17,)
                 ),
                 SizedBox(height: 25,),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: TextFormField(
+                    onChanged: (String val) {
+                      validationViewModel.changeEmail(val.trim());
+                    },
                     decoration: InputDecoration(
                         hintText: 'Email',
                         prefixIcon: Icon(Icons.email),
@@ -70,9 +82,24 @@ class LoginScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: TextFormField(
+                    onChanged: (String val) {
+                      validationViewModel.changePassword(val.trim());
+                    },
+                    obscureText: !validationViewModel.isPasswordVisible,
                     decoration: InputDecoration(
                         hintText: 'Password',
                         prefixIcon: Icon(Icons.key),
+                        suffixIcon: GestureDetector(
+                          onTap: () {
+                            validationViewModel.changePasswordVisibility();
+                          },
+                          child: Icon(
+                            color: Colors.grey,
+                            validationViewModel.isPasswordVisible
+                            ? Icons.visibility
+                            : Icons.visibility_off
+                          ),
+                        ),
                         filled: true,
                         fillColor: Colors.white70,
                         enabledBorder: OutlineInputBorder(
@@ -96,22 +123,33 @@ class LoginScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: GestureDetector(
-                    // onTap: signIn,
+                    onTap: () async {
+                      if (loginFormValid) {
+                       bool login = await authViewModel.signInWithEmailAndPassword(
+                          validationViewModel.email.value!,
+                          validationViewModel.password.value!
+                         );
+                       validationViewModel.changeFreezeButtonColour();
+                       validationViewModel.clearLogin();
+                      }
+                    },
                     child: Container(
                       padding: EdgeInsets.all(20),
                       decoration: BoxDecoration(
-                        color: Colors.black,
+                        color: loginFormValid || freezeButtonColour ? Colors.black : Colors.grey[400],
                         borderRadius: BorderRadius.circular(30),
                       ),
                       child: Center(
-                        child: Text(
+                        child: authViewModel.status == Status.Authenticating
+                            ? CircularProgressIndicator(color: Colors.white)
+                            : Text(
                             'Sign In',
                             style: GoogleFonts.montserrat(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
-                              color: Colors.grey[200]
-                            )
-                        ), //  isLoggingIn ? CircularProgressIndicator(color: Colors.white) :
+                                color: Colors.grey[200]
+                            ),
+                        ),
                       ),
                     ),
                   ),
@@ -127,7 +165,9 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ),
                     GestureDetector(
-                      // onTap: widget.showRegisterPage,
+                      onTap: () async {
+                        openSignUpScreen(context);
+                      },
                       child: Text(
                         ' Register now',
                         style: TextStyle(

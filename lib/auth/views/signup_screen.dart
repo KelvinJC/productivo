@@ -1,18 +1,32 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:todo/auth/models/status.dart';
 import 'package:todo/auth/view_models/auth_view_model.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:todo/validation/view_models/signup_validation.dart';
+
+import '../../routing/navigation.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
+
+  bool passwordMatch(String pwd, String confirmPwd) {
+    if (pwd == confirmPwd) {
+      return true;
+    }
+    return false;
+  }
 
   @override
   Widget build(BuildContext context) {
     SignupValidationViewModel validationViewModel = context.watch<SignupValidationViewModel>();
     FirebaseAuthViewModel authViewModel = context.watch<FirebaseAuthViewModel>();
+    bool signUpFormValid = validationViewModel.isSignUpFormValid;
+    bool freezeFields = validationViewModel.freezeBtnColor;
+
     return Scaffold(
       backgroundColor: Colors.grey[200],
       body: SafeArea(
@@ -46,6 +60,11 @@ class SignUpScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: TextFormField(
+                    onChanged: (String val) {
+                      validationViewModel.changeName(val.trim());
+                    },
+                    // enabled: validationViewModel.freezeTextField,  // to disable user input once sign up btn is clicked
+                    keyboardType: TextInputType.name,
                     decoration: InputDecoration(
                         hintText: 'Name',
                         prefixIcon: Icon(Icons.person),
@@ -73,7 +92,7 @@ class SignUpScreen extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: TextFormField(
                     onChanged: (String value) {
-                      validationViewModel.changePhoneNumber(value);
+                      validationViewModel.changePhoneNumber(value.trim());
                     },
                     keyboardType: TextInputType.number,
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
@@ -112,6 +131,9 @@ class SignUpScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: TextFormField(
+                    onChanged: (String val) {
+                      validationViewModel.changeEmail(val.trim());
+                    },
                     keyboardType: TextInputType.emailAddress,
                     inputFormatters: [
                       FilteringTextInputFormatter.allow(
@@ -166,7 +188,7 @@ class SignUpScreen extends StatelessWidget {
                             validationViewModel.changePasswordVisibility('pwd');
                           },
                           child: Icon(
-                            color: Colors.grey,
+                              color: Colors.grey,
                               validationViewModel.isPasswordVisible
                                   ? Icons.visibility_off
                                   : Icons.visibility
@@ -217,10 +239,10 @@ class SignUpScreen extends StatelessWidget {
                             validationViewModel.changePasswordVisibility('confirm password');
                           },
                           child: Icon(
-                            color: Colors.grey,
-                            validationViewModel.isConfirmPasswordVisible
-                                ? Icons.visibility_off
-                                : Icons.visibility
+                              color: Colors.grey,
+                              validationViewModel.isConfirmPasswordVisible
+                                  ? Icons.visibility_off
+                                  : Icons.visibility
                           ),
                         ),
                         filled: true,
@@ -248,23 +270,32 @@ class SignUpScreen extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: GestureDetector(
                     onTap: () {
-                      authViewModel.printCreds(validationViewModel.password.value!, validationViewModel.confirmPassword.value!);
+                      if (signUpFormValid) {
+                        authViewModel.signUpWithEmailAndPassword(
+                            validationViewModel.email.value!,
+                            validationViewModel.password.value!
+                        );
+                        validationViewModel.freezeSignUpButtonColor();
+                      }
+                      // else show error msg as snack pop or whatever it is called
                     },
                     child: Container(
                       padding: EdgeInsets.all(20),
                       decoration: BoxDecoration(
-                        color: Colors.black,
+                        color: signUpFormValid || freezeFields ? Colors.black : Colors.grey[400],
                         borderRadius: BorderRadius.circular(30),
                       ),
                       child: Center(
-                        child: Text(
+                        child: authViewModel.status == Status.Registering
+                            ? CircularProgressIndicator(color: Colors.white,)
+                            : Text(
                             'Sign Up',
                             style: GoogleFonts.montserrat(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.grey[200]
                             )
-                        ), //  isLoggingIn ? CircularProgressIndicator(color: Colors.white) :
+                        ),
                       ),
                     ),
                   ),
@@ -280,7 +311,9 @@ class SignUpScreen extends StatelessWidget {
                       ),
                     ),
                     GestureDetector(
-                      // onTap: widget.showRegisterPage,
+                      onTap: () async {
+                        openLoginScreenFromSignUpScreen(context);
+                      },
                       child: Text(
                         ' Login',
                         style: TextStyle(
