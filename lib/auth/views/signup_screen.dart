@@ -8,6 +8,8 @@ import 'package:todo/auth/models/status.dart';
 import 'package:todo/auth/view_models/auth_view_model.dart';
 import 'package:todo/validation/view_models/signup_validation.dart';
 
+import '../../routing/navigation.dart';
+
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
 
@@ -309,7 +311,9 @@ class SignUpScreen extends StatelessWidget {
                       ),
                     ),
                     GestureDetector(
-                      // onTap: widget.showRegisterPage,
+                      onTap: () async {
+                        openLoginScreenFromSignUpScreen(context);
+                      },
                       child: Text(
                         ' Login',
                         style: TextStyle(

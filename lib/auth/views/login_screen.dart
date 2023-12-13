@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:todo/auth/view_models/auth_view_model.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:todo/validation/view_models/login_validation.dart';
-
+import 'package:todo/routing/navigation.dart';
 import '../models/status.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -165,7 +165,9 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ),
                     GestureDetector(
-                      // onTap: widget.showRegisterPage,
+                      onTap: () async {
+                        openSignUpScreen(context);
+                      },
                       child: Text(
                         ' Register now',
                         style: TextStyle(
