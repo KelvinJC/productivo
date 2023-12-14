@@ -106,38 +106,6 @@ class HomePage extends StatelessWidget {
       ),
       body: Column(
         children: [
-          // SizedBox(height: 25,),
-          // Padding(
-          //   padding: const EdgeInsets.all(20.0),
-          //   child: TextFormField(
-          //     decoration: InputDecoration(
-          //         hintText: 'Search',
-          //         prefixIcon: GestureDetector(
-          //           onTap: () {
-          //             loginValidationViewModel.changeUserLoggedOut();
-          //             authViewModel.signOut();
-          //           },
-          //           child: Icon(Icons.search)
-          //         ),
-          //         filled: true,
-          //         fillColor: Colors.white70,
-          //         enabledBorder: OutlineInputBorder(
-          //           borderSide: BorderSide(
-          //               width: 1,
-          //               color: Colors.white70
-          //           ),
-          //           borderRadius: BorderRadius.circular(30),
-          //         ),
-          //         focusedBorder: OutlineInputBorder(
-          //           borderSide: BorderSide(
-          //               width: 1,
-          //               color: Colors.white70
-          //           ),
-          //           borderRadius: BorderRadius.circular(30),
-          //         )
-          //     ),
-          //   ),
-          // ),
           GreetUserCard(),
           SizedBox(height: 25,),
           Padding(
