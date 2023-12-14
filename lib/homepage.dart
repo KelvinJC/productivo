@@ -1,9 +1,20 @@
+
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo/components/todo_list_row.dart';
+import 'package:todo/components/calendar_row.dart';
+
 import 'package:todo/validation/view_models/login_validation.dart';
 import 'auth/view_models/auth_view_model.dart';
+
+class Calendar {
+  String day;
+  int date;
+
+  Calendar({required this.day, required this.date});
+
+}
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -12,22 +23,36 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     FirebaseAuthViewModel authViewModel = context.watch<FirebaseAuthViewModel>();
     LoginValidationViewModel loginValidationViewModel = context.watch<LoginValidationViewModel>();
-
+    List cal = [
+      Calendar(day: 'Mon', date: 21),
+      Calendar(day: 'Tues', date: 22),
+      Calendar(day: 'Wed', date: 23),
+      Calendar(day: 'Thur', date: 24),
+      Calendar(day: 'Fri', date: 25),
+      Calendar(day: 'Sat', date: 26),
+      Calendar(day: 'Sun', date: 27),
+    ];
 
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
         backgroundColor: Colors.grey[200],
-        leading: const Padding(
+        leading: Padding(
           padding: EdgeInsets.only(left: 20.0),
-          child: CircleAvatar(
-            radius: 50,
-            backgroundImage: AssetImage('assets/images/beach3.png'),
+          child: GestureDetector(
+            onTap: () {
+              loginValidationViewModel.changeUserLoggedOut();
+              authViewModel.signOut();
+            },
+            child: CircleAvatar(
+              radius: 50,
+              backgroundImage: AssetImage('assets/images/beach3.png'),
+            ),
           ),
         ),
         actions: [
           Padding(
-            padding: const EdgeInsets.only(right: 130.0),
+            padding: const EdgeInsets.only(right: 180.0),
             child: Text(
               'Hi Kelvin',
               style: GoogleFonts.montserrat(
@@ -42,46 +67,61 @@ class HomePage extends StatelessWidget {
             size: 30.0,
           ),
           SizedBox(width: 25,),
-          Icon(
-            color: Colors.grey[600],
-            Icons.message_outlined,
-            size: 30.0,
-          ),
-          SizedBox(width: 25,),
+          // Icon(
+          //   color: Colors.grey[600],
+          //   Icons.message_outlined,
+          //   size: 30.0,
+          // ),
+          // SizedBox(width: 25,),
 
         ],
       ),
       body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: TextFormField(
-              decoration: InputDecoration(
-                  hintText: 'Search',
-                  prefixIcon: GestureDetector(
-                    onTap: () {
-                      loginValidationViewModel.changeUserLoggedOut();
-                      authViewModel.signOut();
-                    },
-                    child: Icon(Icons.search)
-                  ),
-                  filled: true,
-                  fillColor: Colors.white70,
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                        width: 1,
-                        color: Colors.white70
-                    ),
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                        width: 1,
-                        color: Colors.white70
-                    ),
-                    borderRadius: BorderRadius.circular(30),
-                  )
-              ),
+          SizedBox(height: 25,),
+          // Padding(
+          //   padding: const EdgeInsets.all(20.0),
+          //   child: TextFormField(
+          //     decoration: InputDecoration(
+          //         hintText: 'Search',
+          //         prefixIcon: GestureDetector(
+          //           onTap: () {
+          //             loginValidationViewModel.changeUserLoggedOut();
+          //             authViewModel.signOut();
+          //           },
+          //           child: Icon(Icons.search)
+          //         ),
+          //         filled: true,
+          //         fillColor: Colors.white70,
+          //         enabledBorder: OutlineInputBorder(
+          //           borderSide: BorderSide(
+          //               width: 1,
+          //               color: Colors.white70
+          //           ),
+          //           borderRadius: BorderRadius.circular(30),
+          //         ),
+          //         focusedBorder: OutlineInputBorder(
+          //           borderSide: BorderSide(
+          //               width: 1,
+          //               color: Colors.white70
+          //           ),
+          //           borderRadius: BorderRadius.circular(30),
+          //         )
+          //     ),
+          //   ),
+          // ),
+          SizedBox(
+            height: 120,
+            child: ListView.builder(
+                padding: EdgeInsets.fromLTRB(12.0, 0.0, 25.0, 24.0),
+                scrollDirection: Axis.horizontal,
+                itemCount: cal.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: CalendarRow(calendar: cal[index]),
+                  );
+                }
             ),
           ),
           Padding(
