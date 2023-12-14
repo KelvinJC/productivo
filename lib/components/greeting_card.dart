@@ -14,12 +14,16 @@ class GreetUserCard extends StatelessWidget {
     String hourOfDay = formattedTime.split(':')[0];
 
     switch (int.parse(hourOfDay)) {
-      case < 12:
+      case < 12 && >= 0:      // 00:00 am - 11:59 am
         return 'Morning';
-      case < 16 && >= 12:
+      case == 12:             // 12:00 pm - 12:59 pm
+        return 'Noon';
+      case < 16 && > 12:      // 13:00 pm - 15:59 pm
         return 'Afternoon';
-      default:
+      case >= 16 && <= 19:    // 16:00 pm - 19:59 pm
         return 'Evening';
+      default:                // 20:00 pm - 23:59 pm
+        return 'Night';
     }
   }
 
@@ -45,15 +49,14 @@ class GreetUserCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Good',
+            'Thursday',
             style: GoogleFonts.montserrat(
                 fontWeight: FontWeight.bold,
-                fontSize: 48,
+                fontSize: 25,
                 color: Colors.white,
                 height: 0.8,
             ),
           ),
-          SizedBox(height: 0.1,),
           Text(
             appropriateGreeting(_currentTime),
             style: GoogleFonts.montserrat(
@@ -62,12 +65,12 @@ class GreetUserCard extends StatelessWidget {
                 color: Colors.white
             ),
           ),
-          SizedBox(height: 25,),
+          SizedBox(height: 45,),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Today is $currentDay',
+                'Today  ',//$currentDay',
                 style: GoogleFonts.montserrat(
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
@@ -75,7 +78,7 @@ class GreetUserCard extends StatelessWidget {
                 ),
               ),
               Text(
-                '75%',
+                'Completed',
                 style: GoogleFonts.montserrat(
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
@@ -96,7 +99,7 @@ class GreetUserCard extends StatelessWidget {
                 ),
               ),
               Text(
-                'Completed Tasks',
+                '75%',
                 style: GoogleFonts.montserrat(
                   // fontWeight: FontWeight.bold,
                     fontSize: 14,
