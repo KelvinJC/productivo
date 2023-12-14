@@ -79,6 +79,48 @@ class HomePage extends StatelessWidget {
 
         ],
       ),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.white,
+        type: BottomNavigationBarType.fixed,
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(
+              size: 28,
+                color: Colors.black54,
+                Icons.home_filled
+            ),
+            label: ''
+          ),
+          BottomNavigationBarItem(
+              icon: Icon(color: Colors.black54, Icons.calendar_today),
+              label: ''
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              color: Colors.black54,
+              size: 32,
+              Icons.add_box_outlined
+            ),
+            label: 'Add'
+          ),
+          BottomNavigationBarItem(
+              icon: Icon(
+                  color: Colors.black54,
+                  size: 32,
+                  Icons.view_list_rounded
+              ),
+              label: ''
+          ),
+          BottomNavigationBarItem(
+              icon: Icon(
+                  color: Colors.black54,
+                  size: 32,
+                  Icons.person
+              ),
+              label: ''
+          ),
+        ],
+      ),
       body: Column(
         children: [
           // SizedBox(height: 25,),
