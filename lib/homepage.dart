@@ -10,13 +10,7 @@ import 'package:todo/components/calendar_row.dart';
 import 'package:todo/validation/view_models/login_validation.dart';
 import 'auth/view_models/auth_view_model.dart';
 
-class Calendar {
-  String day;
-  int date;
 
-  Calendar({required this.day, required this.date});
-
-}
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -25,15 +19,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     FirebaseAuthViewModel authViewModel = context.watch<FirebaseAuthViewModel>();
     LoginValidationViewModel loginValidationViewModel = context.watch<LoginValidationViewModel>();
-    List cal = [
-      Calendar(day: 'Mon', date: 21),
-      Calendar(day: 'Tues', date: 22),
-      Calendar(day: 'Wed', date: 23),
-      Calendar(day: 'Thur', date: 24),
-      Calendar(day: 'Fri', date: 25),
-      Calendar(day: 'Sat', date: 26),
-      Calendar(day: 'Sun', date: 27),
-    ];
+
 
     return Scaffold(
       backgroundColor: Colors.grey[200],
@@ -157,20 +143,6 @@ class HomePage extends StatelessWidget {
           // ),
           GreetUserCard(),
           SizedBox(height: 25,),
-          // SizedBox(
-          //   height: 120,
-          //   child: ListView.builder(
-          //       padding: EdgeInsets.fromLTRB(12.0, 0.0, 25.0, 24.0),
-          //       scrollDirection: Axis.horizontal,
-          //       itemCount: cal.length,
-          //       itemBuilder: (context, index) {
-          //         return Padding(
-          //           padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          //           child: CalendarRow(calendar: cal[index]),
-          //         );
-          //       }
-          //   ),
-          // ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: Row(
