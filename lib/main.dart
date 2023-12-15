@@ -9,6 +9,8 @@ import 'package:todo/homepage.dart';
 import 'package:todo/validation/view_models/login_validation.dart';
 import 'package:todo/validation/view_models/signup_validation.dart';
 
+import 'clock/view_models/clock_view_model.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -37,6 +39,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<LoginValidationViewModel>(
             create: (_) => LoginValidationViewModel()
+        ),
+        ChangeNotifierProvider<ClockViewModel>(
+            create: (_) => ClockViewModel()
         ),
       ],
       child: MaterialApp(
