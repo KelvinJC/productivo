@@ -49,7 +49,7 @@ class GreetUserCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Thursday',
+            currentDay,
             style: GoogleFonts.montserrat(
                 fontWeight: FontWeight.bold,
                 fontSize: 25,
