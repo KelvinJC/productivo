@@ -50,7 +50,7 @@ class HomePage extends StatelessWidget {
           Icon(
             color: Colors.grey[600],
             Icons.notifications_none_outlined,
-            size: 30.0,
+            size:30.0,
           ),
           SizedBox(width: 25,),
           // Icon(
@@ -68,20 +68,24 @@ class HomePage extends StatelessWidget {
         items: [
           BottomNavigationBarItem(
             icon: Icon(
-              size: 28,
+              size: 24,
+
                 color: Colors.black54,
                 Icons.home_filled
             ),
             label: ''
           ),
           BottomNavigationBarItem(
-              icon: Icon(color: Colors.black54, Icons.calendar_today),
+              icon: Icon(
+                  size: 20,
+                  color: Colors.black54,
+                  Icons.calendar_today),
               label: ''
           ),
           BottomNavigationBarItem(
             icon: Icon(
               color: Colors.black54,
-              size: 32,
+
               Icons.add_box_outlined
             ),
             label: 'Add'
@@ -89,7 +93,7 @@ class HomePage extends StatelessWidget {
           BottomNavigationBarItem(
               icon: Icon(
                   color: Colors.black54,
-                  size: 32,
+
                   Icons.view_list_rounded
               ),
               label: ''
@@ -97,7 +101,7 @@ class HomePage extends StatelessWidget {
           BottomNavigationBarItem(
               icon: Icon(
                   color: Colors.black54,
-                  size: 32,
+
                   Icons.person
               ),
               label: ''
@@ -109,16 +113,44 @@ class HomePage extends StatelessWidget {
           GreetUserCard(),
           SizedBox(height: 25,),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: Row(
+            padding: const EdgeInsets.symmetric(horizontal: 25.0,),
+            child: Column(
+              // mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text(
-                  'Tasks for you',
-                  style: GoogleFonts.montserrat(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      '8 Tasks',
+                      style: GoogleFonts.montserrat(
+                          fontSize: 15,
+                          // fontWeight: FontWeight.bold
+                      ),
+                    ),
+                    Text(
+                      '4 Boards',
+                      style: GoogleFonts.montserrat(
+                        fontSize: 15,
+                        // fontWeight: FontWeight.bold
+                      ),
+                    ),
+                  ],
                 ),
+
+                // tab switch imitation
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                      width: 180,
+                        child: Divider(color: Colors.black,) // switches colour based on selection of tasks or boards
+                    ),
+                    SizedBox(
+                        width: 180,
+                        child: Divider(color: Colors.grey[400],)
+                    ),
+                  ],
+                )
               ],
             ),
           ),
