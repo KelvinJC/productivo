@@ -63,13 +63,12 @@ class HomePage extends StatelessWidget {
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
+        iconSize: 20.0,
         backgroundColor: Colors.white,
         type: BottomNavigationBarType.fixed,
-        items: [
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(
-              size: 24,
-
                 color: Colors.black54,
                 Icons.home_filled
             ),
@@ -77,14 +76,12 @@ class HomePage extends StatelessWidget {
           ),
           BottomNavigationBarItem(
               icon: Icon(
-                  size: 20,
-                  color: Colors.black54,
-                  Icons.calendar_today),
+                  color: Colors.black,
+                  Icons.calendar_month),
               label: ''
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              color: Colors.black54,
 
               Icons.add_box_outlined
             ),
@@ -92,11 +89,10 @@ class HomePage extends StatelessWidget {
           ),
           BottomNavigationBarItem(
               icon: Icon(
-                  color: Colors.black54,
 
                   Icons.view_list_rounded
               ),
-              label: ''
+              label: 'Boards'
           ),
           BottomNavigationBarItem(
               icon: Icon(
@@ -104,7 +100,7 @@ class HomePage extends StatelessWidget {
 
                   Icons.person
               ),
-              label: ''
+              label: 'Profile'
           ),
         ],
       ),
@@ -124,7 +120,7 @@ class HomePage extends StatelessWidget {
                       '8 Tasks',
                       style: GoogleFonts.montserrat(
                           fontSize: 15,
-                          // fontWeight: FontWeight.bold
+                          fontWeight: FontWeight.bold // normal if unselected
                       ),
                     ),
                     Text(
@@ -159,7 +155,7 @@ class HomePage extends StatelessWidget {
             child: ListView.separated(
                 padding: EdgeInsets.only(top: 5.0, bottom: 15.0),
                 itemBuilder: (context, index) {
-                  return TodoListRow();
+                  return TodoListRow(index: index);
                 },
                 separatorBuilder: (context, index) => Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
