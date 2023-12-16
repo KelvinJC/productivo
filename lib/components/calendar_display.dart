@@ -76,26 +76,33 @@ class _CalendarDisplayState extends State<CalendarDisplay> {
           calendarStyle: CalendarStyle(
               todayTextStyle: GoogleFonts.montserrat(
                   fontSize: 12,
+                  color: Colors.white70,
+                  fontWeight: FontWeight.bold,
               ),
               weekendTextStyle: GoogleFonts.montserrat(
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
                   color: Colors.white70
-
               ),
               outsideTextStyle: GoogleFonts.montserrat(
                   fontSize: 12,
                 fontWeight: FontWeight.w100,
                 color: Colors.white70
-
-
               ),
               defaultTextStyle: GoogleFonts.montserrat(
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
                   color: Colors.white70
+              ),
+            // define the selected day decoration
+            selectedDecoration: const BoxDecoration(
+              color: Colors.white54, // Customize the color as needed
+              shape: BoxShape.circle,
+            ),
 
-              )
+            // define today's decoration so that when user clicks another date,
+            // today no longer holds any highligh
+            todayDecoration: BoxDecoration(),
           ),
 
         )
