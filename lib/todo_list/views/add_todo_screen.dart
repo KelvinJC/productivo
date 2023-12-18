@@ -125,7 +125,7 @@ class AddTodoScreen extends StatelessWidget {
                         height: 70,
                         decoration: BoxDecoration(
                           color: endCalVisible ? Colors.black : Colors.white70,
-                          borderRadius: BorderRadius.circular(15),
+                          borderRadius: BorderRadius.circular(30),
 
                         ),
                         child: Padding(
@@ -239,6 +239,264 @@ class AddTodoScreen extends StatelessWidget {
                         ),
                       ),
                     ]
+                  ),
+                ),
+                const SizedBox(height: 20,),
+                GestureDetector(
+                  // onTap: () {
+                  //   todoViewModel.toggleEndDateCalendarVisible();
+                  // },
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 70,
+                        decoration: BoxDecoration(
+                          color: Colors.white70,
+                          borderRadius: BorderRadius.circular(15),
+
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                  'Category',
+                                  style: GoogleFonts.montserrat(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  )
+                              ),
+                              Text(
+                                  'Work',
+                                  style: GoogleFonts.montserrat(
+                                    fontSize: 15,
+                                    // fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  )
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      // Visibility(
+                      //     maintainState: true,
+                      //     visible: endCalVisible,
+                      //     child: const Column(
+                      //       mainAxisAlignment: MainAxisAlignment.start,
+                      //       children: [
+                      //         SizedBox(height: 20,),
+                      //         CalendarDisplay(),
+                      //         Padding(
+                      //           padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
+                      //           child: Divider(),
+                      //         ),
+                      //       ],
+                      //     )
+                      // ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 20,),
+                GestureDetector(
+                  // onTap: () {
+                  //   todoViewModel.toggleEndDateCalendarVisible();
+                  // },
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 70,
+                        decoration: BoxDecoration(
+                          color: Colors.white70,
+                          borderRadius: BorderRadius.circular(15),
+
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  Icon(Icons.location_on_outlined),
+                                  const SizedBox(width: 20,),
+                                  Text(
+                                      'Location',
+                                      style: GoogleFonts.montserrat(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                      )
+                                  ),
+                                ],
+                              ),
+                              Text(
+                                  'My desk',
+                                  style: GoogleFonts.montserrat(
+                                    fontSize: 15,
+                                    // fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  )
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      // Visibility(
+                      //     maintainState: true,
+                      //     visible: endCalVisible,
+                      //     child: const Column(
+                      //       mainAxisAlignment: MainAxisAlignment.start,
+                      //       children: [
+                      //         SizedBox(height: 20,),
+                      //         CalendarDisplay(),
+                      //         Padding(
+                      //           padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
+                      //           child: Divider(),
+                      //         ),
+                      //       ],
+                      //     )
+                      // ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 20,),
+                GestureDetector(
+                  // onTap: () {
+                  //   todoViewModel.toggleEndDateCalendarVisible();
+                  // },
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 70,
+                        decoration: BoxDecoration(
+                          color: Colors.white70,
+                          borderRadius: BorderRadius.circular(15),
+
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  Icon(Icons.alarm_on),
+                                  const SizedBox(width: 20,),
+                                  Text(
+                                      'Reminder',
+                                      style: GoogleFonts.montserrat(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                      )
+                                  ),
+                                ],
+                              ),
+                              Text(
+                                  'None',
+                                  style: GoogleFonts.montserrat(
+                                    fontSize: 15,
+                                    // fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  )
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      // Visibility(
+                      //     maintainState: true,
+                      //     visible: endCalVisible,
+                      //     child: const Column(
+                      //       mainAxisAlignment: MainAxisAlignment.start,
+                      //       children: [
+                      //         SizedBox(height: 20,),
+                      //         CalendarDisplay(),
+                      //         Padding(
+                      //           padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
+                      //           child: Divider(),
+                      //         ),
+                      //       ],
+                      //     )
+                      // ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 20,),                GestureDetector(
+                  // onTap: () {
+                  //   todoViewModel.toggleEndDateCalendarVisible();
+                  // },
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 70,
+                        decoration: BoxDecoration(
+                          color: Colors.white70,
+                          borderRadius: BorderRadius.circular(15),
+
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  Icon(Icons.bookmark_border),
+                                  const SizedBox(width: 20,),
+                                  Text(
+                                      'Priority',
+                                      style: GoogleFonts.montserrat(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                      )
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Container(
+                                    decoration: const BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.orange,
+                                    ),
+                                    width: 8.0, // Adjust the width as needed
+                                    height: 8.0, // Adjust the height as needed
+                                  ),
+                                  const SizedBox(width: 5,),
+                                  Text(
+                                      'Medium',
+                                      style: GoogleFonts.montserrat(
+                                        fontSize: 15,
+                                        // fontWeight: FontWeight.bold,
+                                        color: Colors.orange,
+                                      )
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      // Visibility(
+                      //     maintainState: true,
+                      //     visible: endCalVisible,
+                      //     child: const Column(
+                      //       mainAxisAlignment: MainAxisAlignment.start,
+                      //       children: [
+                      //         SizedBox(height: 20,),
+                      //         CalendarDisplay(),
+                      //         Padding(
+                      //           padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
+                      //           child: Divider(),
+                      //         ),
+                      //       ],
+                      //     )
+                      // ),
+                    ],
                   ),
                 ),
                 const SizedBox(height: 20,),
