@@ -46,7 +46,7 @@ class TodoListRow extends StatelessWidget {
       child: Container(
         height: 100,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(15),
           color: Colors.white,
           boxShadow: [
             BoxShadow(
