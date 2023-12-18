@@ -26,7 +26,7 @@ class _CalendarDisplayState extends State<CalendarDisplay> {
     return Container(
       height: 330,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(30),
         color: Colors.black,
       ),
       child: TableCalendar(
