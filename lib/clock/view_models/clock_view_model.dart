@@ -47,7 +47,9 @@ class ClockViewModel extends ChangeNotifier {
     String hourOfDay = _currentTime.hour.toString().split(':')[0];
 
     switch (int.parse(hourOfDay)) {
-      case < 12 && >= 0:      // 00:00 am - 11:59 am
+      case == 0:              // 00:00 am - 00:59 am
+        return 'Midnight';
+      case < 12 && > 0:       // 01:00 am - 11:59 am
         return 'Morning';
       case == 12:             // 12:00 pm - 12:59 pm
         return 'Noon';
