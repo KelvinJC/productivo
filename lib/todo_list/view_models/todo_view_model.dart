@@ -1,5 +1,4 @@
-
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class TodoViewModel extends ChangeNotifier{
   bool _isStartDateCalendarVisible = false;
@@ -22,10 +21,5 @@ class TodoViewModel extends ChangeNotifier{
     notifyListeners();
   }
 
-  // bool isWidgetVisible = true;
-  //
-  // void toggleVisibility() {
-  //   isWidgetVisible = !isWidgetVisible;
-  //   notifyListeners();
-  // }
+
 }
