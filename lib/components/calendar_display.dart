@@ -100,7 +100,7 @@ class _CalendarDisplayState extends State<CalendarDisplay> {
           ),
 
           // define today's decoration so that when user clicks another date,
-          // today no longer holds any highligh
+          // today no longer holds any highlight
           todayDecoration: BoxDecoration(),
         ),
 
