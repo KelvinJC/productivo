@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:todo/auth/view_models/auth_view_model.dart';
 import 'package:todo/auth/views/switch_screen.dart';
+import 'package:todo/calendar/view_models/calendar_view_model.dart';
 import 'package:todo/firebase_options.dart';
 import 'package:todo/homepage.dart';
 import 'package:todo/todo_list/view_models/todo_view_model.dart';
@@ -47,6 +48,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<TodoViewModel>(
             create: (_) => TodoViewModel()
+        ),
+        ChangeNotifierProvider<CalendarViewModel>(
+            create: (_) => CalendarViewModel()
         ),
       ],
       child: MaterialApp(
