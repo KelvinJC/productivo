@@ -21,6 +21,8 @@ class AddTodoScreen extends StatelessWidget {
     String formattedEndDay = DateFormat('EEE, MMM d y').format(endDay);
     bool startCalVisible = todoViewModel.isStartDateCalendarVisible;
     bool endCalVisible = todoViewModel.isEndDateCalendarVisible;
+    bool timeSelected = todoViewModel.isTimeSelected;
+    bool allDaySelected = todoViewModel.isAllDay;
 
     SystemChannels.textInput.invokeMethod('TextInput.hide');
 
@@ -44,19 +46,19 @@ class AddTodoScreen extends StatelessWidget {
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
                       ),
-                      contentPadding: EdgeInsets.all(20.0),
+                      contentPadding: const EdgeInsets.all(20.0),
                       // prefixIcon: Icon(Icons.email),
                       filled: true,
                       fillColor: Colors.white70,
                       enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                             width: 1,
                             color: Colors.white70
                         ),
                         borderRadius: BorderRadius.circular(15),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                             width: 1,
                             color: Colors.white70
                         ),
@@ -110,7 +112,7 @@ class AddTodoScreen extends StatelessWidget {
                           child: const Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              const SizedBox(height: 20,),
+                              SizedBox(height: 20,),
                               StartCalendar(),
                               Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
@@ -185,63 +187,76 @@ class AddTodoScreen extends StatelessWidget {
                   child: Row(
                     children: [
                       Expanded(
-                        child: Container(
-                          height: 70,
-                          decoration: BoxDecoration(
-                              color: Colors.white70,
-                              borderRadius: BorderRadius.circular(15)
-                          ),
-                          child: Center(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(Icons.timer_outlined),
-                                const SizedBox(width: 10,),
-                                Text(
-                                    'Time',
-                                    style: GoogleFonts.montserrat(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black,
-                                    )
-                                ),
-                              ],
+                        child: GestureDetector(
+                          onTap: () {
+                            todoViewModel.selectTime();
+                          },
+                          child: Container(
+                            height: 70,
+                            decoration: BoxDecoration(
+                                color: timeSelected ? Colors.black : Colors.white70,
+                                borderRadius: BorderRadius.circular(15)
+                            ),
+                            child: Center(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                      color: timeSelected ? Colors.grey : Colors.black,
+                                      Icons.timer_outlined
+                                  ),
+                                  const SizedBox(width: 10,),
+                                  Text(
+                                      'Time',
+                                      style: GoogleFonts.montserrat(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold,
+                                        color: timeSelected ? Colors.grey : Colors.black,
+                                      )
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: const VerticalDivider(
+                      const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: VerticalDivider(
                           color: Colors.grey,
                           thickness: 1.0,
                         ),
                       ),
                       Expanded(
-                        child: Container(
-                          height: 70,
-                          decoration: BoxDecoration(
-                              color: Colors.black,
-                              borderRadius: BorderRadius.circular(15)
-                          ),
-                          child: Center(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  color: Colors.grey,
-                                  Icons.calendar_month_outlined
-                                ),
-                                const SizedBox(width: 10,),
-                                Text(
-                                    'All day',
-                                    style: GoogleFonts.montserrat(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.grey,
-                                    )
-                                ),
-                              ],
+                        child: GestureDetector(
+                          onTap: () {
+                            todoViewModel.selectAllDay();
+                          },
+                          child: Container(
+                            height: 70,
+                            decoration: BoxDecoration(
+                                color: allDaySelected ? Colors.black : Colors.white70,
+                                borderRadius: BorderRadius.circular(15)
+                            ),
+                            child: Center(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    color: allDaySelected ? Colors.grey : Colors.black,
+                                    Icons.calendar_month_outlined
+                                  ),
+                                  const SizedBox(width: 10,),
+                                  Text(
+                                      'All day',
+                                      style: GoogleFonts.montserrat(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold,
+                                        color: allDaySelected ? Colors.grey : Colors.black,
+                                      )
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
@@ -327,7 +342,7 @@ class AddTodoScreen extends StatelessWidget {
                             children: [
                               Row(
                                 children: [
-                                  Icon(Icons.location_on_outlined),
+                                  const Icon(Icons.location_on_outlined),
                                   const SizedBox(width: 20,),
                                   Text(
                                       'Location',
@@ -452,7 +467,7 @@ class AddTodoScreen extends StatelessWidget {
                             children: [
                               Row(
                                 children: [
-                                  Icon(Icons.bookmark_border),
+                                  const Icon(Icons.bookmark_border),
                                   const SizedBox(width: 20,),
                                   Text(
                                       'Priority',
