@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:todo/components/calendar_display.dart';
+import 'package:todo/calendar/view_models/calendar_view_model.dart';
+import 'package:todo/calendar/views/end_calendar_widget.dart';
+import 'package:todo/calendar/views/start_calendar_widget.dart';
 import 'package:todo/todo_list/view_models/todo_view_model.dart';
 
 class AddTodoScreen extends StatelessWidget {
@@ -10,11 +13,16 @@ class AddTodoScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChannels.textInput.invokeMethod('TextInput.hide');
     TodoViewModel todoViewModel = context.watch<TodoViewModel>();
+    CalendarViewModel calendarViewModel = context.watch<CalendarViewModel>();
+    DateTime startDay = calendarViewModel.startCalCurrentDay;
+    DateTime endDay = calendarViewModel.endCalCurrentDay;
+    String formattedStartDay = DateFormat('EEE, MMM d y').format(startDay);
+    String formattedEndDay = DateFormat('EEE, MMM d y').format(endDay);
     bool startCalVisible = todoViewModel.isStartDateCalendarVisible;
     bool endCalVisible = todoViewModel.isEndDateCalendarVisible;
 
+    SystemChannels.textInput.invokeMethod('TextInput.hide');
 
     return Scaffold(
       backgroundColor: Colors.grey[200],
@@ -84,7 +92,7 @@ class AddTodoScreen extends StatelessWidget {
                                   )
                               ),
                               Text(
-                                  'Sat, 16 Dec 2023  08:00',
+                                  formattedStartDay,
                                   style: GoogleFonts.montserrat(
                                     fontSize: 15,
                                     // fontWeight: FontWeight.bold,
@@ -103,7 +111,7 @@ class AddTodoScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               const SizedBox(height: 20,),
-                              CalendarDisplay(),
+                              StartCalendar(),
                               Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
                                 child: Divider(),
@@ -125,7 +133,7 @@ class AddTodoScreen extends StatelessWidget {
                         height: 70,
                         decoration: BoxDecoration(
                           color: endCalVisible ? Colors.black : Colors.white70,
-                          borderRadius: BorderRadius.circular(30),
+                          borderRadius: BorderRadius.circular(15),
 
                         ),
                         child: Padding(
@@ -142,7 +150,7 @@ class AddTodoScreen extends StatelessWidget {
                                   )
                               ),
                               Text(
-                                  'Wed, 17 Feb 2024  08:00',
+                                  formattedEndDay,
                                   style: GoogleFonts.montserrat(
                                     fontSize: 15,
                                     // fontWeight: FontWeight.bold,
@@ -160,7 +168,7 @@ class AddTodoScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               SizedBox(height: 20,),
-                              CalendarDisplay(),
+                              EndCalendar(),
                               Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
                                 child: Divider(),
