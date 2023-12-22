@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:todo/calendar/view_models/calendar_view_model.dart';
 import 'package:todo/calendar/views/end_calendar_widget.dart';
 import 'package:todo/calendar/views/start_calendar_widget.dart';
+import 'package:todo/clock/view_models/clock_view_model.dart';
 import 'package:todo/todo_list/view_models/todo_view_model.dart';
 
 class AddTodoScreen extends StatelessWidget {
@@ -15,16 +16,25 @@ class AddTodoScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     TodoViewModel todoViewModel = context.watch<TodoViewModel>();
     CalendarViewModel calendarViewModel = context.watch<CalendarViewModel>();
+    ClockViewModel clockViewModel = context.watch<ClockViewModel>();
     DateTime startDay = calendarViewModel.startCalCurrentDay;
     DateTime endDay = calendarViewModel.endCalCurrentDay;
-    String formattedStartDay = DateFormat('EEE, MMM d y').format(startDay);
-    String formattedEndDay = DateFormat('EEE, MMM d y').format(endDay);
+    String allDayStartDay = DateFormat('EEE, MMM d y').format(startDay);
+    String allDayEndDay = DateFormat('EEE, MMM d y').format(endDay);
     bool startCalVisible = todoViewModel.isStartDateCalendarVisible;
     bool endCalVisible = todoViewModel.isEndDateCalendarVisible;
-    bool timeSelected = todoViewModel.isTimeSelected;
+    bool timeBtnSelected = todoViewModel.isTimeBtnSelected;
     bool allDaySelected = todoViewModel.isAllDay;
+    String selectedStartTime = todoViewModel.isStartTimeSet ? 'todoViewModel.formattedTime' : clockViewModel.formattedTime;
+    String selectedEndTime = todoViewModel.isEndTimeSet ? 'endTime' : todoViewModel.addOneHour(selectedStartTime);
+    String selectedEndDay = todoViewModel.isEndTimeSet ? 'selectedEndDay' : '';
+    bool startClock = todoViewModel.isStartClockVisible;
+    bool endClock = todoViewModel.isEndClockVisible;
 
     SystemChannels.textInput.invokeMethod('TextInput.hide');
+
+    StartCalendar startCal = const StartCalendar();
+    EndCalendar endCal = const EndCalendar();
 
     return Scaffold(
       backgroundColor: Colors.grey[200],
@@ -69,14 +79,18 @@ class AddTodoScreen extends StatelessWidget {
                 const SizedBox(height: 20,),
                 GestureDetector(
                   onTap: () {
-                    todoViewModel.toggleStartDateCalendarVisible();
+                    if (allDaySelected) {
+                      todoViewModel.toggleStartDateCalendarVisible();
+                    } else {
+                      todoViewModel.toggleStartDateClockVisible();
+                    }
                   },
                   child: Column(
                     children: [
                       Container(
                         height: 70,
                         decoration: BoxDecoration(
-                          color: startCalVisible ? Colors.black : Colors.white70,
+                          color: startCalVisible || startClock ? Colors.black : Colors.white70,
                           borderRadius: BorderRadius.circular(15),
 
                         ),
@@ -90,15 +104,15 @@ class AddTodoScreen extends StatelessWidget {
                                   style: GoogleFonts.montserrat(
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold,
-                                      color: startCalVisible ? Colors.white70 : Colors.black,
+                                      color: startCalVisible || startClock ? Colors.white70 : Colors.black,
                                   )
                               ),
                               Text(
-                                  formattedStartDay,
+                                  timeBtnSelected ? '$allDayStartDay  $selectedStartTime' : allDayStartDay,
                                   style: GoogleFonts.montserrat(
                                     fontSize: 15,
                                     // fontWeight: FontWeight.bold,
-                                    color: startCalVisible ? Colors.white70 : Colors.black,
+                                    color: startCalVisible || startClock ? Colors.white70 : Colors.black,
                                   )
                               ),
                             ],
@@ -106,15 +120,56 @@ class AddTodoScreen extends StatelessWidget {
                         ),
                       ),
 
+
                       Visibility(
                           maintainState: true,
                           visible: startCalVisible,
-                          child: const Column(
+                          child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              SizedBox(height: 20,),
-                              StartCalendar(),
-                              Padding(
+                              const SizedBox(height: 20,),
+                              Container(
+                                height: 330,
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  color: Colors.black,
+                                ),
+                                child: startCal,
+                              ),
+                              const Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
+                                child: Divider(),
+                              ),
+                            ],
+                          )
+                      ),
+
+                      // select time
+                      Visibility(
+                          maintainState: true,
+                          visible: startClock,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              const SizedBox(height: 20,),
+                              Container(
+                                height: 330,
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  color: Colors.black,
+                                ),
+                                child: Text(
+                                    'Time Sat, 16 Dec 2023  08:00',
+                                    style: GoogleFonts.montserrat(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.grey,
+                                    )
+                                ),
+                              ),
+                              const Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
                                 child: Divider(),
                               ),
@@ -127,14 +182,18 @@ class AddTodoScreen extends StatelessWidget {
                 SizedBox(height: startCalVisible ? 0.0 : 20,),
                 GestureDetector(
                   onTap: () {
-                    todoViewModel.toggleEndDateCalendarVisible();
+                    if (allDaySelected) {
+                      todoViewModel.toggleEndDateCalendarVisible();
+                    } else {
+                      todoViewModel.toggleEndDateClockVisible();
+                    }
                   },
                   child: Column(
                     children: [
                       Container(
                         height: 70,
                         decoration: BoxDecoration(
-                          color: endCalVisible ? Colors.black : Colors.white70,
+                          color: endCalVisible || endClock ? Colors.black : Colors.white70,
                           borderRadius: BorderRadius.circular(15),
 
                         ),
@@ -148,15 +207,14 @@ class AddTodoScreen extends StatelessWidget {
                                   style: GoogleFonts.montserrat(
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold,
-                                      color: endCalVisible ? Colors.white70 : Colors.black,
+                                      color: endCalVisible || endClock ? Colors.white70 : Colors.black,
                                   )
                               ),
                               Text(
-                                  formattedEndDay,
+                                  timeBtnSelected ? '$selectedEndDay  $selectedEndTime' : allDayEndDay,
                                   style: GoogleFonts.montserrat(
                                     fontSize: 15,
-                                    // fontWeight: FontWeight.bold,
-                                    color: endCalVisible ? Colors.white70 : Colors.black,
+                                    color: endCalVisible || endClock ? Colors.white70 : Colors.black,
                                   )
                               ),
                             ],
@@ -166,12 +224,52 @@ class AddTodoScreen extends StatelessWidget {
                       Visibility(
                           maintainState: true,
                           visible: endCalVisible,
-                          child: const Column(
+                          child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                const SizedBox(height: 20,),
+                                Container(
+                                  height: 330,
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    color: Colors.black,
+                                  ),
+                                  child: endCal,
+                                ),
+                                const Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
+                                  child: Divider(),
+                                ),
+                              ],
+                          )
+                      ),
+
+                      // select time
+                      Visibility(
+                          maintainState: true,
+                          visible: endClock,
+                          child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              SizedBox(height: 20,),
-                              EndCalendar(),
-                              Padding(
+                              const SizedBox(height: 20,),
+                              Container(
+                                height: 330,
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  color: Colors.black,
+                                ),
+                                child: Text(
+                                        'Time Sat, 16 Dec 2023  08:00',
+                                        style: GoogleFonts.montserrat(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.grey,
+                                        )
+                                      ),
+                              ),
+                              const Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
                                 child: Divider(),
                               ),
@@ -194,7 +292,7 @@ class AddTodoScreen extends StatelessWidget {
                           child: Container(
                             height: 70,
                             decoration: BoxDecoration(
-                                color: timeSelected ? Colors.black : Colors.white70,
+                                color: timeBtnSelected ? Colors.black : Colors.white70,
                                 borderRadius: BorderRadius.circular(15)
                             ),
                             child: Center(
@@ -202,7 +300,7 @@ class AddTodoScreen extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Icon(
-                                      color: timeSelected ? Colors.grey : Colors.black,
+                                      color: timeBtnSelected ? Colors.grey : Colors.black,
                                       Icons.timer_outlined
                                   ),
                                   const SizedBox(width: 10,),
@@ -211,7 +309,7 @@ class AddTodoScreen extends StatelessWidget {
                                       style: GoogleFonts.montserrat(
                                         fontSize: 15,
                                         fontWeight: FontWeight.bold,
-                                        color: timeSelected ? Colors.grey : Colors.black,
+                                        color: timeBtnSelected ? Colors.grey : Colors.black,
                                       )
                                   ),
                                 ],
