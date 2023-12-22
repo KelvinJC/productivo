@@ -14,27 +14,33 @@ class AddTodoScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // providers
     TodoViewModel todoViewModel = context.watch<TodoViewModel>();
     CalendarViewModel calendarViewModel = context.watch<CalendarViewModel>();
     ClockViewModel clockViewModel = context.watch<ClockViewModel>();
+    // calendar state
     DateTime startDay = calendarViewModel.startCalCurrentDay;
     DateTime endDay = calendarViewModel.endCalCurrentDay;
+    // date display format
     String allDayStartDay = DateFormat('EEE, MMM d y').format(startDay);
     String allDayEndDay = DateFormat('EEE, MMM d y').format(endDay);
+    // choice of time input state
     bool startCalVisible = todoViewModel.isStartDateCalendarVisible;
     bool endCalVisible = todoViewModel.isEndDateCalendarVisible;
     bool timeBtnSelected = todoViewModel.isTimeBtnSelected;
     bool allDaySelected = todoViewModel.isAllDay;
+    bool startClock = todoViewModel.isStartClockVisible;
+    bool endClock = todoViewModel.isEndClockVisible;
+    // clock state
     String selectedStartTime = todoViewModel.isStartTimeSet ? 'todoViewModel.formattedTime' : clockViewModel.formattedTime;
     String selectedEndTime = todoViewModel.isEndTimeSet ? 'endTime' : todoViewModel.addOneHour(selectedStartTime);
     String selectedEndDay = todoViewModel.isEndTimeSet ? 'selectedEndDay' : '';
-    bool startClock = todoViewModel.isStartClockVisible;
-    bool endClock = todoViewModel.isEndClockVisible;
-
-    SystemChannels.textInput.invokeMethod('TextInput.hide');
-
+    // calendars
     StartCalendar startCal = const StartCalendar();
     EndCalendar endCal = const EndCalendar();
+    // remove keyboard when user clicks outside textbox
+    SystemChannels.textInput.invokeMethod('TextInput.hide');
+
 
     return Scaffold(
       backgroundColor: Colors.grey[200],
@@ -45,6 +51,7 @@ class AddTodoScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
+                // title input field
                 TextFormField(
                   style: GoogleFonts.montserrat(
                     fontSize: 15,
@@ -77,6 +84,8 @@ class AddTodoScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 20,),
+
+                // start date field
                 GestureDetector(
                   onTap: () {
                     if (allDaySelected) {
@@ -120,7 +129,7 @@ class AddTodoScreen extends StatelessWidget {
                         ),
                       ),
 
-
+                      // start date calendar
                       Visibility(
                           maintainState: true,
                           visible: startCalVisible,
@@ -145,7 +154,7 @@ class AddTodoScreen extends StatelessWidget {
                           )
                       ),
 
-                      // select time
+                      // rolling calendar & clock for start date and time
                       Visibility(
                           maintainState: true,
                           visible: startClock,
@@ -180,6 +189,8 @@ class AddTodoScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: startCalVisible ? 0.0 : 20,),
+
+                // end date input field
                 GestureDetector(
                   onTap: () {
                     if (allDaySelected) {
@@ -221,6 +232,7 @@ class AddTodoScreen extends StatelessWidget {
                           ),
                         ),
                       ),
+                      // end calendar
                       Visibility(
                           maintainState: true,
                           visible: endCalVisible,
@@ -245,7 +257,7 @@ class AddTodoScreen extends StatelessWidget {
                           )
                       ),
 
-                      // select time
+                      // rolling calendar & clock for end date and time
                       Visibility(
                           maintainState: true,
                           visible: endClock,
@@ -280,10 +292,12 @@ class AddTodoScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: endCalVisible ? 0.0 : 20.0 ,),
-                // toggler for 'All day' or 'Time'
+
+                // buttons for 'All day' or 'Time'
                 IntrinsicHeight(
                   child: Row(
                     children: [
+                      // Time button
                       Expanded(
                         child: GestureDetector(
                           onTap: () {
@@ -325,6 +339,8 @@ class AddTodoScreen extends StatelessWidget {
                           thickness: 1.0,
                         ),
                       ),
+
+                      // All day button
                       Expanded(
                         child: GestureDetector(
                           onTap: () {
@@ -363,6 +379,8 @@ class AddTodoScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 20,),
+
+                // category field
                 GestureDetector(
                   // onTap: () {
                   //   todoViewModel.toggleEndDateCalendarVisible();
@@ -545,7 +563,8 @@ class AddTodoScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(height: 20,),                GestureDetector(
+                const SizedBox(height: 20,),
+                GestureDetector(
                   // onTap: () {
                   //   todoViewModel.toggleEndDateCalendarVisible();
                   // },
@@ -623,7 +642,6 @@ class AddTodoScreen extends StatelessWidget {
                 const SizedBox(height: 20,),
               ],
             ),
-
           ),
         ),
       ),
