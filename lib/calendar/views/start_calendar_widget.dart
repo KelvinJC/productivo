@@ -12,83 +12,75 @@ class StartCalendar extends StatelessWidget {
     CalendarViewModel calendarViewModel = context.watch<CalendarViewModel>();
     DateTime today = calendarViewModel.startCalCurrentDay;
 
-    return Container(
-        height: 330,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-          color: Colors.black,
+    return TableCalendar(
+      focusedDay: today,
+      firstDay: DateTime.utc(2020, 10, 16),
+      lastDay: DateTime.utc(2030, 3, 14),
+      rowHeight: 40,
+      headerStyle: HeaderStyle(
+        formatButtonVisible: false,
+        titleCentered: true,
+        titleTextStyle: GoogleFonts.montserrat(
+            fontWeight: FontWeight.bold,
+            color: Colors.white70
         ),
-        child: TableCalendar(
-          focusedDay: today,
-          firstDay: DateTime.utc(2010, 10, 16),
-          lastDay: DateTime.utc(2030, 3, 14),
-          rowHeight: 40,
-          headerStyle: HeaderStyle(
-            formatButtonVisible: false,
-            titleCentered: true,
-            titleTextStyle: GoogleFonts.montserrat(
-                fontWeight: FontWeight.bold,
-                color: Colors.white70
-            ),
-            leftChevronIcon: const Icon(
-                color: Colors.white70,
-                Icons.chevron_left
-            ),
-            rightChevronIcon: const Icon(
-                color: Colors.white70,
-                Icons.chevron_right
-            ),
-          ),
+        leftChevronIcon: const Icon(
+            color: Colors.white70,
+            Icons.chevron_left
+        ),
+        rightChevronIcon: const Icon(
+            color: Colors.white70,
+            Icons.chevron_right
+        ),
+      ),
 
-          availableGestures: AvailableGestures.horizontalSwipe, // instead of AvailableGestures.all,
-          // enables vertical scrolling of screen
-          // without swiping through calendar months
-          selectedDayPredicate: (day) => isSameDay(day, today),
-          onDaySelected: calendarViewModel.setStartCalCurrentDay,
-          daysOfWeekStyle: DaysOfWeekStyle(
-            weekdayStyle: GoogleFonts.montserrat(
-                fontSize: 13,
-                color: Colors.white70
-            ),
-            weekendStyle: GoogleFonts.montserrat(
-                fontSize: 13,
-                color: Colors.white70
+      availableGestures: AvailableGestures.horizontalSwipe, // instead of AvailableGestures.all,
+                                                            // enables vertical scrolling of screen
+                                                            // without swiping through calendar months
+      selectedDayPredicate: (day) => isSameDay(day, today),
+      onDaySelected: calendarViewModel.setStartCalCurrentDay,
+      daysOfWeekStyle: DaysOfWeekStyle(
+        weekdayStyle: GoogleFonts.montserrat(
+            fontSize: 13,
+            color: Colors.white70
+        ),
+        weekendStyle: GoogleFonts.montserrat(
+            fontSize: 13,
+            color: Colors.white70
 
-            ),
-          ),
-          calendarStyle: CalendarStyle(
-            todayTextStyle: GoogleFonts.montserrat(
-              fontSize: 12,
-              color: Colors.white70,
-              fontWeight: FontWeight.bold,
-            ),
-            weekendTextStyle: GoogleFonts.montserrat(
-                fontSize: 12,
-                fontWeight: FontWeight.bold,
-                color: Colors.white70
-            ),
-            outsideTextStyle: GoogleFonts.montserrat(
-                fontSize: 12,
-                fontWeight: FontWeight.w100,
-                color: Colors.white70
-            ),
-            defaultTextStyle: GoogleFonts.montserrat(
-                fontSize: 12,
-                fontWeight: FontWeight.bold,
-                color: Colors.white70
-            ),
-            // define the selected day decoration
-            selectedDecoration: const BoxDecoration(
-              color: Colors.white54, // Customize the color as needed
-              shape: BoxShape.circle,
-            ),
+        ),
+      ),
+      calendarStyle: CalendarStyle(
+        todayTextStyle: GoogleFonts.montserrat(
+          fontSize: 12,
+          color: Colors.white70,
+          fontWeight: FontWeight.bold,
+        ),
+        weekendTextStyle: GoogleFonts.montserrat(
+            fontSize: 12,
+            fontWeight: FontWeight.bold,
+            color: Colors.white70
+        ),
+        outsideTextStyle: GoogleFonts.montserrat(
+            fontSize: 12,
+            fontWeight: FontWeight.w100,
+            color: Colors.white70
+        ),
+        defaultTextStyle: GoogleFonts.montserrat(
+            fontSize: 12,
+            fontWeight: FontWeight.bold,
+            color: Colors.white70
+        ),
+        // define the selected day decoration
+        selectedDecoration: const BoxDecoration(
+          color: Colors.white54, // Customize the color as needed
+          shape: BoxShape.circle,
+        ),
 
-            // define today's decoration so that when user clicks another date,
-            // today no longer holds any highlight
-            todayDecoration: BoxDecoration(),
-          ),
-
-        )
+        // define today's decoration so that when user clicks another date,
+        // today no longer holds any highlight
+        todayDecoration: BoxDecoration(),
+      ),
     );
   }
 }
