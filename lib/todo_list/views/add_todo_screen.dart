@@ -7,6 +7,8 @@ import 'package:todo/calendar/view_models/calendar_view_model.dart';
 import 'package:todo/calendar/views/end_calendar_widget.dart';
 import 'package:todo/calendar/views/start_calendar_widget.dart';
 import 'package:todo/clock/view_models/clock_view_model.dart';
+import 'package:todo/components/category_button.dart';
+import 'package:todo/todo_list/view_models/category_view_model.dart';
 import 'package:todo/todo_list/view_models/todo_view_model.dart';
 
 class AddTodoScreen extends StatelessWidget {
@@ -18,6 +20,7 @@ class AddTodoScreen extends StatelessWidget {
     TodoViewModel todoViewModel = context.watch<TodoViewModel>();
     CalendarViewModel calendarViewModel = context.watch<CalendarViewModel>();
     ClockViewModel clockViewModel = context.watch<ClockViewModel>();
+    CategoryViewModel categoryViewModel = context.watch<CategoryViewModel>();
     // calendar state
     DateTime startDay = calendarViewModel.startCalCurrentDay;
     DateTime endDay = calendarViewModel.endCalCurrentDay;
@@ -232,7 +235,7 @@ class AddTodoScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      // end calendar
+                      // end date calendar
                       Visibility(
                           maintainState: true,
                           visible: endCalVisible,
@@ -382,9 +385,9 @@ class AddTodoScreen extends StatelessWidget {
 
                 // category field
                 GestureDetector(
-                  // onTap: () {
-                  //   todoViewModel.toggleEndDateCalendarVisible();
-                  // },
+                  onTap: () {
+                    categoryViewModel.toggleCategoryFieldSelected();
+                  },
                   child: Column(
                     children: [
                       Container(
@@ -408,7 +411,7 @@ class AddTodoScreen extends StatelessWidget {
                                   )
                               ),
                               Text(
-                                  'Work',
+                                  categoryViewModel.selectedCategory,
                                   style: GoogleFonts.montserrat(
                                     fontSize: 15,
                                     // fontWeight: FontWeight.bold,
@@ -419,87 +422,124 @@ class AddTodoScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      // Visibility(
-                      //     maintainState: true,
-                      //     visible: endCalVisible,
-                      //     child: const Column(
-                      //       mainAxisAlignment: MainAxisAlignment.start,
-                      //       children: [
-                      //         SizedBox(height: 20,),
-                      //         CalendarDisplay(),
-                      //         Padding(
-                      //           padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
-                      //           child: Divider(),
-                      //         ),
-                      //       ],
-                      //     )
-                      // ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 20,),
-                GestureDetector(
-                  // onTap: () {
-                  //   todoViewModel.toggleEndDateCalendarVisible();
-                  // },
-                  child: Column(
-                    children: [
-                      Container(
-                        height: 70,
-                        decoration: BoxDecoration(
-                          color: Colors.white70,
-                          borderRadius: BorderRadius.circular(15),
+                      const SizedBox(height: 20,),
+                      Visibility(
+                        visible: categoryViewModel.categoryFieldSelected,
+                        child: const Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                             Wrap(
+                              alignment: WrapAlignment.spaceBetween,
+                              spacing: 20.0,
+                              runSpacing: 20.0,
+                              children: [
+                                DefaultCategoryButton(category: 'Personal'),
+                                DefaultCategoryButton(category: 'Work'),
+                                DefaultCategoryButton(category: 'Sports'),
+                                DefaultCategoryButton(category: 'Social'),
+                                DefaultCategoryButton(category: 'Projects'),
+                                DefaultCategoryButton(category: 'School'),
+                                DefaultCategoryButton(category: 'Study'),
+                                DefaultCategoryButton(category: 'Purchase'),
+                                DefaultCategoryButton(category: 'Entertainment'),
+                                DefaultCategoryButton(category: 'Finance'),
+                              ],
+                            ),
+                            SizedBox( height: 20,),
+                            Row(
+                              children: [
+                                AddCategoryButton(),
+                              ],
+                            ),
+                            SizedBox( height: 20,),
+                            Divider(),
 
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: [
-                                  const Icon(Icons.location_on_outlined),
-                                  const SizedBox(width: 20,),
-                                  Text(
-                                      'Location',
-                                      style: GoogleFonts.montserrat(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black,
-                                      )
-                                  ),
-                                ],
-                              ),
-                              Text(
-                                  'My desk',
-                                  style: GoogleFonts.montserrat(
-                                    fontSize: 15,
-                                    // fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                  )
-                              ),
-                            ],
-                          ),
+
+                          ],
                         ),
                       ),
-                      // Visibility(
-                      //     maintainState: true,
-                      //     visible: endCalVisible,
-                      //     child: const Column(
-                      //       mainAxisAlignment: MainAxisAlignment.start,
-                      //       children: [
-                      //         SizedBox(height: 20,),
-                      //         CalendarDisplay(),
-                      //         Padding(
-                      //           padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
-                      //           child: Divider(),
-                      //         ),
-                      //       ],
-                      //     )
-                      // ),
                     ],
                   ),
                 ),
+                SizedBox(height: categoryViewModel.categoryFieldSelected ?  20.0 : 0.0,),
+                TextFormField(
+                  onTap: () {
+                    print("MY test");
+                  },
+                  // onChanged: ,
+                  style: GoogleFonts.montserrat(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.white70,
+                    prefixIcon: Icon(Icons.location_on_outlined),
+                    hintText: 'Location',
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                        color: Colors.white70,
+                      ),
+                      borderRadius: BorderRadius.circular(15)
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                          color: Colors.white70,
+                        ),
+                      borderRadius: BorderRadius.circular(15)
+                    )
+                  ),
+
+
+                ),
+
+                // GestureDetector(
+                //   // onTap: () {
+                //   //   todoViewModel.toggleEndDateCalendarVisible();
+                //   // },
+                //   child: Column(
+                //     children: [
+                //       Container(
+                //         height: 70,
+                //         decoration: BoxDecoration(
+                //           color: Colors.white70,
+                //           borderRadius: BorderRadius.circular(15),
+                //
+                //         ),
+                //         child: Padding(
+                //           padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                //           child: Row(
+                //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //             children: [
+                //               Row(
+                //                 children: [
+                //                   const Icon(Icons.location_on_outlined),
+                //                   const SizedBox(width: 20,),
+                //                   Text(
+                //                       'Location',
+                //                       style: GoogleFonts.montserrat(
+                //                         fontSize: 15,
+                //                         fontWeight: FontWeight.bold,
+                //                         color: Colors.black,
+                //                       )
+                //                   ),
+                //                 ],
+                //               ),
+                //               Text(
+                //                   'My desk',
+                //                   style: GoogleFonts.montserrat(
+                //                     fontSize: 15,
+                //                     // fontWeight: FontWeight.bold,
+                //                     color: Colors.black,
+                //                   )
+                //               ),
+                //             ],
+                //           ),
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // ),
                 const SizedBox(height: 20,),
                 GestureDetector(
                   // onTap: () {
