@@ -3,7 +3,41 @@ import 'package:google_fonts/google_fonts.dart';
 
 
 class TodoListRow extends StatelessWidget {
-  const TodoListRow({super.key});
+  final int index;
+  const TodoListRow({super.key, required this.index});
+
+  Color? switchColor(int index) {
+    switch (index) {
+      case 1:
+        return Colors.blue[900];
+      case 2:
+        return Colors.red;
+      default:
+        return Colors.green;
+    }
+  }
+
+  String switchBoard(int index) {
+    switch (index) {
+      case 1:
+        return 'Leisure';
+      case 2:
+        return 'Work';
+      default:
+        return 'Sport';
+    }
+  }
+
+  String switchTask(int index) {
+    switch (index) {
+      case 1:
+        return 'Dinner with Jenny';
+      case 2:
+        return 'Merge PR on Task App';
+      default:
+        return 'Run Harcourt marathon';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +46,7 @@ class TodoListRow extends StatelessWidget {
       child: Container(
         height: 100,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(15),
           color: Colors.white,
           boxShadow: [
             BoxShadow(
@@ -35,14 +69,14 @@ class TodoListRow extends StatelessWidget {
                       Container(
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: Colors.blue[900],
+                          color: switchColor(index),
                         ),
                         width: 8.0, // Adjust the width as needed
                         height: 8.0, // Adjust the height as needed
                       ),
                       SizedBox(width: 10,),
                       Text(
-                        'Leisure',
+                        switchBoard(index),
                         style: GoogleFonts.montserrat(
                           fontSize: 15,
                         ),
@@ -52,7 +86,7 @@ class TodoListRow extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(left: 18.0),
                     child: Text(
-                      'Dinner with Jenny',
+                      switchTask(index),
                       style: GoogleFonts.montserrat(
                           fontSize: 15,
                           fontWeight: FontWeight.bold

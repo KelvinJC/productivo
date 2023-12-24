@@ -5,6 +5,7 @@ import 'package:todo/auth/view_models/auth_view_model.dart';
 import 'package:todo/auth/views/signup_screen.dart';
 import 'package:todo/homepage.dart';
 import 'package:todo/splash_screen.dart';
+import 'package:todo/todo_list/views/add_todo_screen.dart';
 import '../models/status.dart';
 import 'package:todo/auth/views/login_screen.dart';
 
@@ -16,11 +17,11 @@ class SwitchScreen extends StatelessWidget {
     FirebaseAuthViewModel authViewModel = context.watch<FirebaseAuthViewModel>();
     switch (authViewModel.status) {
       case Status.Authenticated:
-        return HomePage();
+        return AddTodoScreen();
       case Status.Unauthenticated:
         return LoginScreen();
       case Status.Authenticating:
-        return SplashScreen();
+        return LoginScreen(); //SplashScreen();
       case Status.Uninitialised:
         return Scaffold(
           body: Container(
