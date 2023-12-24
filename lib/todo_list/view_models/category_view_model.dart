@@ -28,4 +28,9 @@ class CategoryViewModel extends ChangeNotifier {
     _categoryFieldSelected = !_categoryFieldSelected;
     notifyListeners();
   }
+
+  void setCategoryFieldSelected() {
+    _categoryFieldSelected = false;
+    notifyListeners();
+  }
 }
