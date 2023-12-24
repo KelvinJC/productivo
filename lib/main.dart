@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:todo/auth/view_models/auth_view_model.dart';
 import 'package:todo/auth/views/switch_screen.dart';
 import 'package:todo/calendar/view_models/calendar_view_model.dart';
 import 'package:todo/firebase_options.dart';
-import 'package:todo/homepage.dart';
 import 'package:todo/todo_list/view_models/category_view_model.dart';
+import 'package:todo/todo_list/view_models/location_view_model.dart';
 import 'package:todo/todo_list/view_models/todo_view_model.dart';
 import 'package:todo/validation/view_models/login_validation.dart';
 import 'package:todo/validation/view_models/signup_validation.dart';
@@ -55,6 +54,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<CategoryViewModel>(
             create: (_) => CategoryViewModel()
+        ),
+        ChangeNotifierProvider<LocationViewModel>(
+            create: (_) => LocationViewModel()
         ),
       ],
       child: MaterialApp(
