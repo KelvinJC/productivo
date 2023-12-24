@@ -15,6 +15,8 @@ class DefaultCategoryButton extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         categoryViewModel.setSelectedCategory(category);
+        FocusScope.of(context).unfocus();
+
       },
       child: Container(
         decoration: BoxDecoration(
