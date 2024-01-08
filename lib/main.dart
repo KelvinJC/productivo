@@ -63,7 +63,7 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.white70, primary: Colors.black54),
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.white70,),
           useMaterial3: true,
         ),
         home: const SwitchScreen(),

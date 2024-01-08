@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
@@ -19,6 +18,7 @@ class AddTodoScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('building');
     // providers
     TodoViewModel todoViewModel = context.watch<TodoViewModel>();
     CalendarViewModel calendarViewModel = context.watch<CalendarViewModel>();
@@ -158,7 +158,7 @@ class AddTodoScreen extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(15),
                                     color: Colors.black,
                                   ),
-                                  child: startCal,
+                                  child: Container(),
                                 ),
                                 const Padding(
                                   padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),

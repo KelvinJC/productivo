@@ -155,7 +155,10 @@ class HomePage extends StatelessWidget {
             child: ListView.separated(
                 padding: EdgeInsets.only(top: 5.0, bottom: 15.0),
                 itemBuilder: (context, index) {
-                  return TodoListRow(index: index);
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: TodoListRow(index: index),
+                  );
                 },
                 separatorBuilder: (context, index) => Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
