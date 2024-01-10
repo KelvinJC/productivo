@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:todo/auth/view_models/auth_view_model.dart';
 import 'package:todo/auth/views/signup_screen.dart';
+import 'package:todo/bottom_nav.dart';
 import 'package:todo/events_page.dart';
 import 'package:todo/homepage.dart';
 import 'package:todo/new_todo.dart';
@@ -19,7 +20,7 @@ class SwitchScreen extends StatelessWidget {
     FirebaseAuthViewModel authViewModel = context.watch<FirebaseAuthViewModel>();
     switch (authViewModel.status) {
       case Status.Authenticated:
-        return EventsList(); // HomePage(); // NewTodo();// AddTodoScreen() //;
+        return BottomNavBar(); // HomePage(); //EventsList(); //  NewTodo();/ AddTodoScreen() ///;
       case Status.Unauthenticated:
         return LoginScreen();
       case Status.Authenticating:
@@ -27,14 +28,14 @@ class SwitchScreen extends StatelessWidget {
       case Status.Uninitialised:
         return Scaffold(
           body: Container(
-              child: Text(
-                'Uninitialised Screen!',
-                style: GoogleFonts.montserrat(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 40,
-                    color: Colors.black
-                ),
-              )
+            child: Text(
+              'Uninitialised Screen!',
+              style: GoogleFonts.montserrat(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 40,
+                  color: Colors.black
+              ),
+            )
           ),
         );
       // SplashScreen();

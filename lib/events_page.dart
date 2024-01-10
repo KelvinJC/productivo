@@ -113,57 +113,57 @@ class EventsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey[200]!, // Color of the shadow
-              offset: const Offset(2, 0), // Offset of the shadow (x, y)
-              blurRadius: 2.0, // Radius of the shadow blur
-              spreadRadius: 1.0, // How much the shadow should spread
-            ),
-          ],
-        ),
-        child: NavigationBar(
-          height: 60,
-          // iconSize: 20.0,
-          backgroundColor: Colors.white,
-          surfaceTintColor: Colors.white,
-
-          // type: BottomNavigationBarType.fixed,
-          destinations: const [
-            NavigationDestination(
-                icon: Icon(
-                    Icons.home_filled
-                ),
-                label: 'Home'
-            ),
-            NavigationDestination(
-                icon: Icon(
-                    Icons.view_list_rounded
-                ),
-                label: 'Tasks'
-            ),
-            // NavigationDestination(
-            //     icon: Icon(
-            //         Icons.add_box_outlined
-            //     ),
-            //     label: 'Add'
-            // ),
-            NavigationDestination(
-                icon: Icon(
-                    Icons.calendar_month),
-                label: 'Events'
-            ),
-            NavigationDestination(
-                icon: Icon(
-                    Icons.person
-                ),
-                label: 'Profile'
-            ),
-          ],
-        ),
-      ),
+      // bottomNavigationBar: Container(
+      //   decoration: BoxDecoration(
+      //     boxShadow: [
+      //       BoxShadow(
+      //         color: Colors.grey[200]!, // Color of the shadow
+      //         offset: const Offset(2, 0), // Offset of the shadow (x, y)
+      //         blurRadius: 2.0, // Radius of the shadow blur
+      //         spreadRadius: 1.0, // How much the shadow should spread
+      //       ),
+      //     ],
+      //   ),
+      //   child: NavigationBar(
+      //     height: 60,
+      //     // iconSize: 20.0,
+      //     backgroundColor: Colors.white,
+      //     surfaceTintColor: Colors.white,
+      //
+      //     // type: BottomNavigationBarType.fixed,
+      //     destinations: const [
+      //       NavigationDestination(
+      //           icon: Icon(
+      //               Icons.home_filled
+      //           ),
+      //           label: 'Home'
+      //       ),
+      //       NavigationDestination(
+      //           icon: Icon(
+      //               Icons.view_list_rounded
+      //           ),
+      //           label: 'Tasks'
+      //       ),
+      //       // NavigationDestination(
+      //       //     icon: Icon(
+      //       //         Icons.add_box_outlined
+      //       //     ),
+      //       //     label: 'Add'
+      //       // ),
+      //       NavigationDestination(
+      //           icon: Icon(
+      //               Icons.calendar_month),
+      //           label: 'Events'
+      //       ),
+      //       NavigationDestination(
+      //           icon: Icon(
+      //               Icons.person
+      //           ),
+      //           label: 'Profile'
+      //       ),
+      //     ],
+      //   ),
+      // ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -175,7 +175,7 @@ class EventsList extends StatelessWidget {
                 width: double.infinity,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
-                  color: Colors.black,
+                  color: Colors.black87,
                 ),
                 child: const EventsListCalendar()
               ),
@@ -227,7 +227,7 @@ class EventsList extends StatelessWidget {
         ),
       ),
       floatingActionButton: Padding(
-        padding: const EdgeInsets.only(right: 5.0),
+        padding: const EdgeInsets.only(right: 10.0),
         child: FloatingActionButton(
           backgroundColor: Colors.black,
           foregroundColor: Colors.white70,

@@ -62,48 +62,48 @@ class HomePage extends StatelessWidget {
 
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        iconSize: 20.0,
-        backgroundColor: Colors.white,
-        type: BottomNavigationBarType.fixed,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(
-                color: Colors.black54,
-                Icons.home_filled
-            ),
-            label: ''
-          ),
-          BottomNavigationBarItem(
-              icon: Icon(
-                  color: Colors.black,
-                  Icons.calendar_month),
-              label: ''
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-
-              Icons.add_box_outlined
-            ),
-            label: 'Add'
-          ),
-          BottomNavigationBarItem(
-              icon: Icon(
-
-                  Icons.view_list_rounded
-              ),
-              label: 'Boards'
-          ),
-          BottomNavigationBarItem(
-              icon: Icon(
-                  color: Colors.black54,
-
-                  Icons.person
-              ),
-              label: 'Profile'
-          ),
-        ],
-      ),
+      // bottomNavigationBar: BottomNavigationBar(
+      //   iconSize: 20.0,
+      //   backgroundColor: Colors.white,
+      //   type: BottomNavigationBarType.fixed,
+      //   items: const [
+      //     BottomNavigationBarItem(
+      //       icon: Icon(
+      //           color: Colors.black54,
+      //           Icons.home_filled
+      //       ),
+      //       label: ''
+      //     ),
+      //     BottomNavigationBarItem(
+      //         icon: Icon(
+      //             color: Colors.black,
+      //             Icons.calendar_month),
+      //         label: ''
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(
+      //
+      //         Icons.add_box_outlined
+      //       ),
+      //       label: 'Add'
+      //     ),
+      //     BottomNavigationBarItem(
+      //         icon: Icon(
+      //
+      //             Icons.view_list_rounded
+      //         ),
+      //         label: 'Boards'
+      //     ),
+      //     BottomNavigationBarItem(
+      //         icon: Icon(
+      //             color: Colors.black54,
+      //
+      //             Icons.person
+      //         ),
+      //         label: 'Profile'
+      //     ),
+      //   ],
+      // ),
       body: Column(
         children: [
           GreetUserCard(),

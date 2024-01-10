@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -12,6 +10,7 @@ import 'package:todo/components/category_button.dart';
 import 'package:todo/todo_list/view_models/category_view_model.dart';
 import 'package:todo/todo_list/view_models/location_view_model.dart';
 import 'package:todo/todo_list/view_models/todo_view_model.dart';
+
 
 class AddTodoScreen extends StatelessWidget {
   const AddTodoScreen({super.key});
@@ -51,6 +50,10 @@ class AddTodoScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.grey[200],
+      appBar: AppBar(
+        backgroundColor: Colors.grey[200],
+        surfaceTintColor: Colors.transparent,
+      ),
       body: GestureDetector(
         onTap: () {
           FocusScope.of(context).unfocus();
@@ -58,10 +61,24 @@ class AddTodoScreen extends StatelessWidget {
         child: SafeArea(
           child: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 25.0),
+              padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 0.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
+                  // Padding(
+                  //   padding: const EdgeInsets.all(8.0),
+                  //   child: Container(
+                  //     decoration: BoxDecoration(
+                  //         shape: BoxShape.circle,
+                  //         color: Colors.grey[850]
+                  //     ),
+                  //     child: const Icon(
+                  //         size: 30,
+                  //         Icons.chevron_left,
+                  //         color: Colors.white
+                  //     ),
+                  //   ),
+                  // ),
                   // title input field
                   TextFormField(
                     // maxLength: 60,
@@ -330,17 +347,17 @@ class AddTodoScreen extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Icon(
-                                        color: timeBtnSelected ? Colors.grey : Colors.black,
-                                        Icons.timer_outlined
+                                      color: timeBtnSelected ? Colors.grey : Colors.black,
+                                      Icons.timer_outlined
                                     ),
                                     const SizedBox(width: 10,),
                                     Text(
-                                        'Time',
-                                        style: GoogleFonts.montserrat(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold,
-                                          color: timeBtnSelected ? Colors.grey : Colors.black,
-                                        )
+                                      'Time',
+                                      style: GoogleFonts.montserrat(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold,
+                                        color: timeBtnSelected ? Colors.grey : Colors.black,
+                                      )
                                     ),
                                   ],
                                 ),
@@ -419,7 +436,7 @@ class AddTodoScreen extends StatelessWidget {
                               children: [
                                 Row(
                                   children: [
-                                    Icon(Icons.category_outlined),
+                                    const Icon(Icons.category_outlined),
                                     const SizedBox(width: 20.0,),
                                     Text(
                                         'Category',
@@ -743,7 +760,6 @@ class AddTodoScreen extends StatelessWidget {
           ),
         ),
       ),
-
     );
   }
 }
