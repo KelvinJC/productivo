@@ -3,9 +3,9 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:todo/todo_list/views/add_todo_screen.dart';
+import 'package:todo/event_list/views/add_event_screen.dart';
 
-import 'components/todo_list_row.dart';
+import '../../components/todo_list_row.dart';
 
 class EventsListCalendar extends StatelessWidget {
   const EventsListCalendar({super.key});

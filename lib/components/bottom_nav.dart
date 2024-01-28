@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo/events_page.dart';
+import 'package:todo/event_list/views/list_events_screen.dart';
 import 'package:todo/homepage.dart';
 
 

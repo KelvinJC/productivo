@@ -7,9 +7,9 @@ import 'package:todo/calendar/views/end_calendar_widget.dart';
 import 'package:todo/calendar/views/start_calendar_widget.dart';
 import 'package:todo/clock/view_models/clock_view_model.dart';
 import 'package:todo/components/category_button.dart';
-import 'package:todo/todo_list/view_models/category_view_model.dart';
-import 'package:todo/todo_list/view_models/location_view_model.dart';
-import 'package:todo/todo_list/view_models/todo_view_model.dart';
+import 'package:todo/event_list/view_models/category_view_model.dart';
+import 'package:todo/event_list/view_models/location_view_model.dart';
+import 'package:todo/event_list/view_models/event_view_model.dart';
 
 
 class AddTodoScreen extends StatelessWidget {
@@ -19,7 +19,7 @@ class AddTodoScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     print('building');
     // providers
-    TodoViewModel todoViewModel = context.watch<TodoViewModel>();
+    EventViewModel eventViewModel = context.watch<EventViewModel>();
     CalendarViewModel calendarViewModel = context.watch<CalendarViewModel>();
     ClockViewModel clockViewModel = context.watch<ClockViewModel>();
     CategoryViewModel categoryViewModel = context.watch<CategoryViewModel>();
@@ -31,16 +31,16 @@ class AddTodoScreen extends StatelessWidget {
     String allDayStartDay = DateFormat('EEE, MMM d y').format(startDay);
     String allDayEndDay = DateFormat('EEE, MMM d y').format(endDay);
     // choice of time input state
-    bool startCalVisible = todoViewModel.isStartDateCalendarVisible;
-    bool endCalVisible = todoViewModel.isEndDateCalendarVisible;
-    bool timeBtnSelected = todoViewModel.isTimeBtnSelected;
-    bool allDaySelected = todoViewModel.isAllDay;
-    bool startClock = todoViewModel.isStartClockVisible;
-    bool endClock = todoViewModel.isEndClockVisible;
+    bool startCalVisible = eventViewModel.isStartDateCalendarVisible;
+    bool endCalVisible = eventViewModel.isEndDateCalendarVisible;
+    bool timeBtnSelected = eventViewModel.isTimeBtnSelected;
+    bool allDaySelected = eventViewModel.isAllDay;
+    bool startClock = eventViewModel.isStartClockVisible;
+    bool endClock = eventViewModel.isEndClockVisible;
     // clock state
-    String selectedStartTime = todoViewModel.isStartTimeSet ? 'todoViewModel.formattedTime' : clockViewModel.formattedTime;
-    String selectedEndTime = todoViewModel.isEndTimeSet ? 'endTime' : todoViewModel.addOneHour(selectedStartTime);
-    String selectedEndDay = todoViewModel.isEndTimeSet ? 'selectedEndDay' : '';
+    String selectedStartTime = eventViewModel.isStartTimeSet ? 'eventViewModel.formattedTime' : clockViewModel.formattedTime;
+    String selectedEndTime = eventViewModel.isEndTimeSet ? 'endTime' : eventViewModel.addOneHour(selectedStartTime);
+    String selectedEndDay = eventViewModel.isEndTimeSet ? 'selectedEndDay' : '';
     // calendars
     StartCalendar startCal = const StartCalendar();
     EndCalendar endCal = const EndCalendar();
@@ -119,9 +119,9 @@ class AddTodoScreen extends StatelessWidget {
                   GestureDetector(
                     onTap: () {
                       if (allDaySelected) {
-                        todoViewModel.toggleStartDateCalendarVisible();
+                        eventViewModel.toggleStartDateCalendarVisible();
                       } else {
-                        todoViewModel.toggleStartDateClockVisible();
+                        eventViewModel.toggleStartDateClockVisible();
                       }
                       FocusScope.of(context).unfocus();
                     },
@@ -225,9 +225,9 @@ class AddTodoScreen extends StatelessWidget {
                   GestureDetector(
                     onTap: () {
                       if (allDaySelected) {
-                        todoViewModel.toggleEndDateCalendarVisible();
+                        eventViewModel.toggleEndDateCalendarVisible();
                       } else {
-                        todoViewModel.toggleEndDateClockVisible();
+                        eventViewModel.toggleEndDateClockVisible();
                       }
                       FocusScope.of(context).unfocus();
                     },
@@ -333,7 +333,7 @@ class AddTodoScreen extends StatelessWidget {
                         Expanded(
                           child: GestureDetector(
                             onTap: () {
-                              todoViewModel.selectTime();
+                              eventViewModel.selectTime();
                               FocusScope.of(context).unfocus();
                             },
                             child: Container(
@@ -377,7 +377,7 @@ class AddTodoScreen extends StatelessWidget {
                         Expanded(
                           child: GestureDetector(
                             onTap: () {
-                              todoViewModel.selectAllDay();
+                              eventViewModel.selectAllDay();
                               FocusScope.of(context).unfocus();
                             },
                             child: Container(
@@ -537,7 +537,7 @@ class AddTodoScreen extends StatelessWidget {
 
                   // GestureDetector(
                   //   // onTap: () {
-                  //   //   todoViewModel.toggleEndDateCalendarVisible();
+                  //   //   eventViewModel.toggleEndDateCalendarVisible();
                   //   // },
                   //   child: Column(
                   //     children: [

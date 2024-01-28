@@ -4,11 +4,11 @@ import 'package:provider/provider.dart';
 import 'package:todo/auth/view_models/auth_view_model.dart';
 import 'package:todo/auth/views/signup_screen.dart';
 import 'package:todo/components/bottom_nav.dart';
-import 'package:todo/events_page.dart';
+import 'package:todo/event_list/views/list_events_screen.dart';
 import 'package:todo/homepage.dart';
 import 'package:todo/new_todo.dart';
 import 'package:todo/splash_screen.dart';
-import 'package:todo/todo_list/views/add_todo_screen.dart';
+import 'package:todo/event_list/views/add_event_screen.dart';
 import '../models/status.dart';
 import 'package:todo/auth/views/login_screen.dart';
 

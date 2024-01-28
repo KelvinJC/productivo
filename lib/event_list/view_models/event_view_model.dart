@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class TodoViewModel extends ChangeNotifier{
+class EventViewModel extends ChangeNotifier{
   bool _isStartDateCalendarVisible = false;
   bool _isEndDateCalendarVisible = false;
   bool _isTimeBtnSelected = true;
