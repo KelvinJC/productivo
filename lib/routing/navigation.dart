@@ -21,8 +21,7 @@ void openLoginScreenFromSignUpScreen(BuildContext context) {
   try {
     Navigator.pop(context);
   } catch(e) {
-    print(e);
+    // --
   }
-
 
 }

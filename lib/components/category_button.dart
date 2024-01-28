@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:todo/todo_list/view_models/category_view_model.dart';
+import 'package:todo/event_list/view_models/category_view_model.dart';
 
 class DefaultCategoryButton extends StatelessWidget {
   final String category;

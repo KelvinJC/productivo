@@ -6,9 +6,9 @@ import 'package:todo/auth/view_models/auth_view_model.dart';
 import 'package:todo/auth/views/switch_screen.dart';
 import 'package:todo/calendar/view_models/calendar_view_model.dart';
 import 'package:todo/firebase_options.dart';
-import 'package:todo/todo_list/view_models/category_view_model.dart';
-import 'package:todo/todo_list/view_models/location_view_model.dart';
-import 'package:todo/todo_list/view_models/todo_view_model.dart';
+import 'package:todo/event_list/view_models/category_view_model.dart';
+import 'package:todo/event_list/view_models/location_view_model.dart';
+import 'package:todo/event_list/view_models/event_view_model.dart';
 import 'package:todo/validation/view_models/login_validation.dart';
 import 'package:todo/validation/view_models/signup_validation.dart';
 
@@ -46,8 +46,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<ClockViewModel>(
             create: (_) => ClockViewModel()
         ),
-        ChangeNotifierProvider<TodoViewModel>(
-            create: (_) => TodoViewModel()
+        ChangeNotifierProvider<EventViewModel>(
+            create: (_) => EventViewModel()
         ),
         ChangeNotifierProvider<CalendarViewModel>(
             create: (_) => CalendarViewModel()
@@ -63,7 +63,7 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.white70, primary: Colors.black54),
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.white70,),
           useMaterial3: true,
         ),
         home: const SwitchScreen(),
