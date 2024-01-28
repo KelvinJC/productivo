@@ -11,7 +11,6 @@ class BottomNavBar extends StatefulWidget {
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
-  int _currentIndex = 0;
   int currentPageIndex = 0;
 
   // define list of pages
@@ -23,12 +22,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: const Text('Bottom Navigation Demo'),
-      // ),
-
       body: _pages[currentPageIndex],
-
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           boxShadow: [
