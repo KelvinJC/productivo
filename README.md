@@ -1,4 +1,6 @@
-# Productivo - Event Tracker and ToDo List Mobile App
+# Productivo 
+
+## Event Tracker and ToDo List Mobile App
 
 Welcome to Productivo, your go-to app for efficient event tracking and ToDo list management! 
 
