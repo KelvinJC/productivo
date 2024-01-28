@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:todo/auth/view_models/auth_view_model.dart';
 import 'package:todo/auth/views/signup_screen.dart';
-import 'package:todo/bottom_nav.dart';
+import 'package:todo/components/bottom_nav.dart';
 import 'package:todo/events_page.dart';
 import 'package:todo/homepage.dart';
 import 'package:todo/new_todo.dart';
