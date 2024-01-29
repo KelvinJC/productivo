@@ -40,7 +40,7 @@ class SwitchScreen extends StatelessWidget {
         );
       // SplashScreen();
       default:
-        return SignUpScreen();
+        return const SignUpScreen();
     }
   }
 }
