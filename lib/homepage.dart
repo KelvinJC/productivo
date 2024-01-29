@@ -69,6 +69,43 @@ class MyTileWidget extends StatelessWidget {
   }
 }
 
+List colors = [
+  (Colors.grey[350]),
+  (Colors.grey),
+  (Colors.grey[850]),
+  (Colors.black38),
+  (Colors.brown[200]),
+  (Colors.blueGrey[100]),
+  (Colors.grey),
+  (Colors.grey[350]),
+  (Colors.black),
+];
+
+List text = [
+  'Personal',
+  'Sports',
+  'Work',
+  'Social',
+  'Projects',
+  'School',
+  'Study',
+  'Purchase',
+  'Entertainment',
+  'Finance',
+];
+
+List  completedTasks = [
+  '11',
+  '50',
+  '24',
+  '2',
+  '4',
+  '0',
+  '1',
+  '78'
+];
+
+
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -76,41 +113,6 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     FirebaseAuthViewModel authViewModel = context.watch<FirebaseAuthViewModel>();
     LoginValidationViewModel loginValidationViewModel = context.watch<LoginValidationViewModel>();
-    List colors = [
-      (Colors.grey[350]),
-      (Colors.grey),
-      (Colors.grey[850]),
-      (Colors.black38),
-      (Colors.brown[200]),
-      (Colors.blueGrey[100]),
-      (Colors.grey),
-      (Colors.grey[350]),
-      (Colors.black),
-    ];
-
-    List text = [
-      'Personal',
-      'Sports',
-      'Work',
-      'Social',
-      'Projects',
-      'School',
-      'Study',
-      'Purchase',
-      'Entertainment',
-      'Finance',
-    ];
-
-    List  completedTasks = [
-      '11',
-      '50',
-      '24',
-      '2',
-      '4',
-      '0',
-      '1',
-      '78'
-    ];
 
     return Scaffold(
       backgroundColor: Colors.grey[200],
