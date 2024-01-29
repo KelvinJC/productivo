@@ -2,7 +2,7 @@
 
 ## Event Tracker and ToDo List Mobile App
 
-Welcome to Productivo, your go-to app for efficient event tracking and ToDo list management! 
+Welcome to Productivo, your go-to app for efficient event tracking and task management! 
 
 Productivo is designed to help you stay organized, streamline your schedule, and effortlessly manage your daily tasks. Whether you're planning events or tackling your ToDo list, Productivo has all the features you need.
 
