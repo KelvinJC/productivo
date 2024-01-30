@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:todo/clock/view_models/clock_view_model.dart';
+import 'package:todo/components/clock/view_models/clock_view_model.dart';
 
 
 

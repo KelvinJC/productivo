@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:todo/calendar/view_models/calendar_view_model.dart';
-import 'package:todo/calendar/views/end_calendar_widget.dart';
-import 'package:todo/calendar/views/start_calendar_widget.dart';
-import 'package:todo/clock/view_models/clock_view_model.dart';
+import 'package:todo/components/calendar/view_models/calendar_view_model.dart';
+import 'package:todo/components/calendar/views/end_calendar_widget.dart';
+import 'package:todo/components/calendar/views/start_calendar_widget.dart';
+import 'package:todo/components/clock/view_models/clock_view_model.dart';
 import 'package:todo/components/category_button.dart';
 import 'package:todo/event_list/view_models/category_view_model.dart';
 import 'package:todo/event_list/view_models/location_view_model.dart';
 import 'package:todo/event_list/view_models/event_view_model.dart';
+
 
 
 class AddTodoScreen extends StatelessWidget {

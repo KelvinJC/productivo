@@ -28,7 +28,7 @@ class DB {
     Database database = await openDatabase(
       join(path, 'database.db'),
       version: 1,
-      onCreate: (sql.Database db, int version) async {
+      onCreate: (Database db, int version) async {
         print!('creating tables .............');
         await db.execute(
         '''
