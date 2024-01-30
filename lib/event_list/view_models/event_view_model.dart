@@ -1,5 +1,14 @@
 import 'package:flutter/material.dart';
 
+import '../../db/database.dart';
+import '../repo/event.dart';
+
+
+DB db = DB.instance;
+EventRepository eventRepository = EventRepository(db);
+
+
+
 class EventViewModel extends ChangeNotifier{
   bool _isStartDateCalendarVisible = false;
   bool _isEndDateCalendarVisible = false;
@@ -85,6 +94,4 @@ class EventViewModel extends ChangeNotifier{
         return '$hourPlusOne:$minute';
     }
   }
-
-
 }
