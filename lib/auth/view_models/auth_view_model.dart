@@ -120,4 +120,18 @@ class FirebaseAuthViewModel extends ChangeNotifier {
   }
 
 
-
+// NOTES on using Object Oriented Interface and Factory Design Pattern
+// to achieve separation of concerns plus loose coupling and high cohesion
+// in authentication flow of Productive mobile app:
+//
+// - create IAuthRepository interface
+// - interface has signature methods such as signin, signup, signout methods
+// - create FireBaseAuth as implementation of IAuthRepository
+// - create GoogleAuth as implementation of IAuthRepository
+// - any other implementation would have the signatory methods and any particular methods
+// - AuthViewModel is the changeNotifier for all authentication UI
+// - it contains a variable which stores the user's selected login preference'
+//   and a factory method that instantiates the required implementation
+//   based on the value of the variable
+// - AuthViewModel also depends on IUserRepository which stores user details in local db
+//   an implementation would be injected as dependency in the root widget AuthViewModel(UserRepository(db = DB.instance))
