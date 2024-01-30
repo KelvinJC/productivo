@@ -4,7 +4,6 @@ import 'package:sqflite/sqflite.dart' as sql;
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:flutter/material.dart';
 
-import '../event_list/models/event_model.dart';
 
 class DB {
   DB._();
