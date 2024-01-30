@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
-
-import '../../db/database.dart';
-import '../repo/event.dart';
-
-
-DB db = DB.instance;
-EventRepository eventRepository = EventRepository(db);
-
+import '../repo/event_interface.dart';
 
 
 class EventViewModel extends ChangeNotifier{
+  final IEventRepository _eventRepository; // Liskov Substitution
+
+  EventViewModel(this._eventRepository);
+
   bool _isStartDateCalendarVisible = false;
   bool _isEndDateCalendarVisible = false;
   bool _isTimeBtnSelected = true;
@@ -42,6 +39,7 @@ class EventViewModel extends ChangeNotifier{
     _isEndClockVisible = false;
     _isEndDateCalendarVisible = !_isEndDateCalendarVisible;
     notifyListeners();
+
   }
 
   void toggleEndDateClockVisible() {
