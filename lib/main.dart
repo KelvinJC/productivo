@@ -13,6 +13,9 @@ import 'package:todo/validation/view_models/login_validation.dart';
 import 'package:todo/validation/view_models/signup_validation.dart';
 
 import 'clock/view_models/clock_view_model.dart';
+import 'event_list/repo/event.dart';
+import '../../db/database.dart';
+
 
 
 void main() async {
@@ -23,6 +26,10 @@ void main() async {
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
+
+  // check that db tables are created
+  await DB.checkDatabaseCreation();
+
   runApp(const MyApp());
 }
 
@@ -32,6 +39,9 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    // get access to database
+    DB db = DB.instance;
+
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<FirebaseAuthViewModel>(
@@ -47,7 +57,7 @@ class MyApp extends StatelessWidget {
             create: (_) => ClockViewModel()
         ),
         ChangeNotifierProvider<EventViewModel>(
-            create: (_) => EventViewModel()
+            create: (_) => EventViewModel(EventRepository(db))
         ),
         ChangeNotifierProvider<CalendarViewModel>(
             create: (_) => CalendarViewModel()

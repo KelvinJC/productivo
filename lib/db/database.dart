@@ -64,16 +64,15 @@ class DB {
   }
 
 
-  static Future<bool> _checkDatabaseCreation() async {
-    // Initialize the database connection
-    var db = await DB._databaseConnection();
+  static Future<bool> checkDatabaseCreation() async {
+    // initialize the database connection
+    Database db = await DB._databaseConnection();
 
-    // Query the sqlite_master table to check for the existence of the necessary tables
-    final tables =
-    await db.rawQuery("SELECT name FROM sqlite_master WHERE type='table';");
+    // query the sqlite_master table to check for the existence of the necessary tables
+    final tables = await db.rawQuery("SELECT name FROM sqlite_master WHERE type='table';");
     final tableNames = tables.map((row) => row['name'] as String).toList();
 
-    // Check if the necessary tables exist in the database
+    // check if the necessary tables exist in the database
     if (tableNames.contains('event')
         // && tableNames.contains('user')
         // && tableNames.contains('todos')
