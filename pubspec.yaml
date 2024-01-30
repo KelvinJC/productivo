@@ -41,7 +41,9 @@ dependencies:
   google_fonts:
   flutter_svg:
   table_calendar:
-
+  sqflite:
+  sqflite_common_ffi:
+  path:
 
 dev_dependencies:
   flutter_test:
