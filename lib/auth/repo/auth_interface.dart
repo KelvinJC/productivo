@@ -1,6 +1,7 @@
 import 'package:todo/auth/models/auth_user_models.dart';
 
 abstract class IAuth {
+  AuthUserModel? get authenticatedUser;
   Future<AuthUserModel> signUpWithEmailAndPassword(String userEmail, String userPassword);
   Future<bool> signInWithEmailAndPassword(String userEmail, String userPassword);
   Future<void> sendPasswordResetEmail(String userEmail);
