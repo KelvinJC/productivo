@@ -1,6 +1,6 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite/sqflite.dart' as sql;
-import 'package:todo/event_list/repo/event_data_status.dart';
+import 'package:todo/common/errors/error_status.dart';
 import '../../db/database.dart';
 import '../repo/event_interface.dart';
 import '../models/event_model.dart';
