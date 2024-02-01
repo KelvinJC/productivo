@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:todo/auth/view_models/auth_view_model.dart';
+import 'package:todo/auth/view_models/auth_view_model2.dart';
 import 'package:todo/auth/views/signup_screen.dart';
 import 'package:todo/components/bottom_nav.dart';
 import 'package:todo/event_list/views/list_events_screen.dart';
@@ -17,7 +17,7 @@ class SwitchScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    FirebaseAuthViewModel authViewModel = context.watch<FirebaseAuthViewModel>();
+    AuthViewModel authViewModel = context.watch<AuthViewModel>();
     switch (authViewModel.status) {
       case Status.Authenticated:
         return BottomNavBar(); // HomePage(); //EventsList(); //  NewTodo();/ AddTodoScreen() ///;
@@ -26,19 +26,24 @@ class SwitchScreen extends StatelessWidget {
       case Status.Authenticating:
         return LoginScreen(); //SplashScreen();
       case Status.Uninitialised:
+        // first time user should be taken through the intro flow
+        // then sign up
         return Scaffold(
-          body: Container(
-            child: Text(
-              'Uninitialised Screen!',
-              style: GoogleFonts.montserrat(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 40,
-                  color: Colors.black
-              ),
-            )
+          body: SafeArea(
+            child: Container(
+              child: Center(
+                child: Text(
+                  'User is never to see the Uninitialised Screen!',
+                  style: GoogleFonts.montserrat(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 40,
+                      color: Colors.black
+                  ),
+                ),
+              )
+            ),
           ),
         );
-      // SplashScreen();
       default:
         return const SignUpScreen();
     }
