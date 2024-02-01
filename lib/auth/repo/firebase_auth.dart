@@ -7,25 +7,25 @@ import 'package:todo/auth/repo/auth_interface.dart';
 class FirebaseAuthRepository implements IAuth {
   // attributes
   late final FirebaseAuth _auth;
-  AuthUser? _authenticatedUser;
+  User? _authenticatedUser;
 
   // constructor
   FirebaseAuthRepository(this._auth);
 
   // getters
   @override
-  AuthUser? get authenticatedUser => _authenticatedUser;
+  User? get authenticatedUser => _authenticatedUser;
 
-  Stream<AuthUser?> get user => _auth.authStateChanges().map(_userFromFirebase);
+  Stream<User?> get user => _auth.authStateChanges().map(_userFromFirebase);
 
 
 
   // sign up new user
   @override
-  Future<AuthUser> signUpWithEmailAndPassword(String userEmail, String userPassword) async {
+  Future<User> signUpWithEmailAndPassword(String userEmail, String userPassword) async {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(email: userEmail, password: userPassword);
-      return AuthUser(
+      return User(
           uid: result.user!.uid,
           displayName: result.user!.displayName,
           email: result.user!.email,
@@ -34,9 +34,9 @@ class FirebaseAuthRepository implements IAuth {
       );
     } on FirebaseAuthException catch(e) {
       print("Error on the new user registration = $e");
-      return AuthUser(displayName: 'Null', uid: 'null');
+      return User(displayName: 'Null', uid: 'null');
     } on Exception catch(e) {
-      return AuthUser(displayName: 'Null', uid: 'null');
+      return User(displayName: 'Null', uid: 'null');
     }
   }
 
@@ -68,12 +68,12 @@ class FirebaseAuthRepository implements IAuth {
 
 
   // callback to set authenticated user attribute based on changes in _auth
-  AuthUser? _userFromFirebase(User? user) {
+  User? _userFromFirebase(User? user) {
     if (user == null) {
-      _authenticatedUser = AuthUser(uid: 'null', displayName: 'Null', email: 'null');
+      _authenticatedUser = User(uid: 'null', displayName: 'Null', email: 'null');
       return _authenticatedUser;
     } else {
-      _authenticatedUser = AuthUser(
+      _authenticatedUser = User(
         uid: user.uid,
         displayName: user.displayName,
         email: user.email,

@@ -30,18 +30,18 @@ class FirebaseAuthViewModel extends ChangeNotifier {
 
   // getters
   Status get status => _status;
-  Stream<AuthUser> get user => _auth.authStateChanges().map(_userFromFirebase);
+  Stream<User> get user => _auth.authStateChanges().map(_userFromFirebase);
 
 
   // create user object based on given user
-  AuthUser _userFromFirebase(User? user) {
+  User _userFromFirebase(User? user) {
     if (user == null) {
-      return AuthUser(
+      return User(
           uid: 'null',
           displayName: 'Null',
           email: 'null'
       );
-    } return AuthUser(
+    } return User(
         uid: user.uid,
         displayName: user.displayName,
         email: user.email,
@@ -62,7 +62,7 @@ class FirebaseAuthViewModel extends ChangeNotifier {
   }
 
   // sign up new user
-  Future<AuthUser> signUpWithEmailAndPassword(String userEmail, String userPassword) async {
+  Future<User> signUpWithEmailAndPassword(String userEmail, String userPassword) async {
     try {
       _status = Status.Registering;
       notifyListeners();
@@ -75,7 +75,7 @@ class FirebaseAuthViewModel extends ChangeNotifier {
       print("Error on the new user registration = " + e.toString());
       _status = Status.Unauthenticated;
       notifyListeners();
-      return AuthUser(displayName: 'Null', uid: 'null');
+      return User(displayName: 'Null', uid: 'null');
     }
   }
 

@@ -1,13 +1,13 @@
 
 
-class AuthUser {
+class User {
   String uid;
   String? email;
   String? displayName;
   String? phoneNumber;
   String? photoUrl;
 
-  AuthUser({
+  User({
     required this.uid,
     this.email,
     this.displayName,
