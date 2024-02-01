@@ -19,6 +19,7 @@ class FirebaseAuthRepository implements IAuth {
   Stream<AuthUserModel?> get user => _auth.authStateChanges().map(_userFromFirebase);
 
 
+
   // sign up new user
   @override
   Future<AuthUserModel> signUpWithEmailAndPassword(String userEmail, String userPassword) async {
@@ -73,7 +74,7 @@ class FirebaseAuthRepository implements IAuth {
       return _authenticatedUser;
     } else {
       _authenticatedUser = AuthUserModel(
-        uid: user!.uid,
+        uid: user.uid,
         displayName: user.displayName,
         email: user.email,
         phoneNumber: user.phoneNumber,
