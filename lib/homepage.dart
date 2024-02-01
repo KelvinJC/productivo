@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:todo/components/greeting_card.dart';
 import 'package:todo/components/todo_list_row.dart';
 import 'package:todo/validation/view_models/login_validation.dart';
-import 'auth/view_models/auth_view_model.dart';
+import 'auth/view_models/auth_view_model2.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class MyTileWidget extends StatelessWidget {
@@ -111,7 +111,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    FirebaseAuthViewModel authViewModel = context.watch<FirebaseAuthViewModel>();
+    AuthViewModel authViewModel = context.watch<AuthViewModel>();
     LoginValidationViewModel loginValidationViewModel = context.watch<LoginValidationViewModel>();
 
     return Scaffold(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:todo/auth/view_models/auth_view_model.dart';
+import 'package:todo/auth/view_models/auth_view_model2.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:todo/validation/view_models/login_validation.dart';
 import 'package:todo/routing/navigation.dart';
@@ -12,7 +12,7 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    FirebaseAuthViewModel authViewModel = context.watch<FirebaseAuthViewModel>();
+    AuthViewModel authViewModel = context.watch<AuthViewModel>();
     LoginValidationViewModel validationViewModel = context.watch<LoginValidationViewModel>();
     bool loginFormValid = validationViewModel.isLoginFormValid;
     bool freezeButtonColour = validationViewModel.freezeButtonColour;
@@ -125,7 +125,7 @@ class LoginScreen extends StatelessWidget {
                   child: GestureDetector(
                     onTap: () async {
                       if (loginFormValid) {
-                       bool login = await authViewModel.signInWithEmailAndPassword(
+                       await authViewModel.signInWithEmailAndPassword(
                           validationViewModel.email.value!,
                           validationViewModel.password.value!
                          );

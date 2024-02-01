@@ -1,6 +1,5 @@
 
 import 'package:path/path.dart';
-import 'package:sqflite/sqflite.dart' as sql;
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:flutter/material.dart';
 
@@ -28,7 +27,7 @@ class DB {
     Database database = await openDatabase(
       join(path, 'database.db'),
       version: 1,
-      onCreate: (sql.Database db, int version) async {
+      onCreate: (Database db, int version) async {
         print!('creating tables .............');
         await db.execute(
         '''
@@ -47,17 +46,20 @@ class DB {
         '''
         );
 
-      // await db.execute(
-      // '''
-      //  CREATE TABLE user(
-      //    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-      //    user_id TEXT,
-      //    username TEXT,
-      //    password TEXT,
-      //    UNIQUE(user_id, username)
-      //      )
-      // '''
-      //  );
+        await db.execute(
+        '''
+         CREATE TABLE user(
+           id INTEGER AUTOINCREMENT NOT NULL,
+           uid TEXT PRIMARY KEY,
+           email TEXT,
+           display_name TEXT,
+           phone_number TEXT,
+           photo_url TEXT,
+           is_active INTEGER,
+           UNIQUE(uid, email)
+           )
+        '''
+       );
       },
     );
     return database;
@@ -74,7 +76,7 @@ class DB {
 
     // check if the necessary tables exist in the database
     if (tableNames.contains('event')
-        // && tableNames.contains('user')
+        && tableNames.contains('user')
         // && tableNames.contains('todos')
       ) {
       print!("Database has been created and tables are present.");

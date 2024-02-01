@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:todo/calendar/view_models/calendar_view_model.dart';
+import 'package:todo/components/calendar/view_models/calendar_view_model.dart';
 
 class StartCalendar extends StatelessWidget {
   const StartCalendar({super.key});

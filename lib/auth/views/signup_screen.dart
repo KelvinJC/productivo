@@ -5,7 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:todo/auth/models/status.dart';
-import 'package:todo/auth/view_models/auth_view_model.dart';
+import 'package:todo/auth/view_models/auth_view_model2.dart';
 import 'package:todo/validation/view_models/signup_validation.dart';
 
 import '../../routing/navigation.dart';
@@ -23,7 +23,7 @@ class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SignupValidationViewModel validationViewModel = context.watch<SignupValidationViewModel>();
-    FirebaseAuthViewModel authViewModel = context.watch<FirebaseAuthViewModel>();
+    AuthViewModel authViewModel = context.watch<AuthViewModel>();
     bool signUpFormValid = validationViewModel.isSignUpFormValid;
     bool freezeFields = validationViewModel.freezeBtnColor;
 
