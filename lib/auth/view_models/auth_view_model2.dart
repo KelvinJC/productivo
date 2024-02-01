@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo/auth/models/auth_user_models.dart';
+import 'package:todo/auth/models/user.dart';
 import 'package:todo/auth/models/status.dart';
 import '../repo/auth_interface.dart';
 

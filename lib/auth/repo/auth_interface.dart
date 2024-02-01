@@ -1,4 +1,4 @@
-import 'package:todo/auth/models/auth_user_models.dart';
+import 'package:todo/auth/models/user.dart';
 
 abstract class IAuth {
   User? get authenticatedUser;
