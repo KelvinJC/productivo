@@ -1,13 +1,13 @@
 
 
-class AuthUserModel {
+class AuthUser {
   String uid;
   String? email;
   String? displayName;
   String? phoneNumber;
   String? photoUrl;
 
-  AuthUserModel({
+  AuthUser({
     required this.uid,
     this.email,
     this.displayName,

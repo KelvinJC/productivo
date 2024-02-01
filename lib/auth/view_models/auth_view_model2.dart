@@ -20,7 +20,7 @@ Remove or add more status for UI or widgets to listen to.
 class AuthViewModel extends ChangeNotifier {
   /*
   All this provider needs from its _authRepository dependency is a getter
-  that yields an authenticated user object of type AuthUserModel
+  that yields an authenticated user object of type AuthUser
   */
 
   /*
@@ -32,8 +32,8 @@ class AuthViewModel extends ChangeNotifier {
   // attributes
   final IAuth _authRepository;
   Status _status = Status.Uninitialised;
-  late AuthUserModel _signedUpUser;
-  late AuthUserModel _currentUser;
+  late AuthUser _signedUpUser;
+  late AuthUser _currentUser;
 
 
 
@@ -44,7 +44,7 @@ class AuthViewModel extends ChangeNotifier {
 
   // getters
   Status get status => _status;
-  AuthUserModel get currentUser => _currentUser; // event & todos form widget may watch this attribute to associate each with a user
+  AuthUser get currentUser => _currentUser; // event & todos form widget may watch this attribute to associate each with a user
 
   // setters
   // may rename to checkUserStatus
@@ -74,7 +74,7 @@ class AuthViewModel extends ChangeNotifier {
   void signUpWithEmailAndPassword(String userEmail, String userPassword) async {
     _status = Status.Registering;
     notifyListeners();
-    AuthUserModel user = await _authRepository.signUpWithEmailAndPassword(userEmail, userPassword);
+    AuthUser user = await _authRepository.signUpWithEmailAndPassword(userEmail, userPassword);
 
     if (user.uid != 'null') {
       _signedUpUser = _currentUser = user;

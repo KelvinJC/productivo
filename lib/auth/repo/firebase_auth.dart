@@ -7,25 +7,25 @@ import 'package:todo/auth/repo/auth_interface.dart';
 class FirebaseAuthRepository implements IAuth {
   // attributes
   late final FirebaseAuth _auth;
-  AuthUserModel? _authenticatedUser;
+  AuthUser? _authenticatedUser;
 
   // constructor
   FirebaseAuthRepository(this._auth);
 
   // getters
   @override
-  AuthUserModel? get authenticatedUser => _authenticatedUser;
+  AuthUser? get authenticatedUser => _authenticatedUser;
 
-  Stream<AuthUserModel?> get user => _auth.authStateChanges().map(_userFromFirebase);
+  Stream<AuthUser?> get user => _auth.authStateChanges().map(_userFromFirebase);
 
 
 
   // sign up new user
   @override
-  Future<AuthUserModel> signUpWithEmailAndPassword(String userEmail, String userPassword) async {
+  Future<AuthUser> signUpWithEmailAndPassword(String userEmail, String userPassword) async {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(email: userEmail, password: userPassword);
-      return AuthUserModel(
+      return AuthUser(
           uid: result.user!.uid,
           displayName: result.user!.displayName,
           email: result.user!.email,
@@ -34,9 +34,9 @@ class FirebaseAuthRepository implements IAuth {
       );
     } on FirebaseAuthException catch(e) {
       print("Error on the new user registration = $e");
-      return AuthUserModel(displayName: 'Null', uid: 'null');
+      return AuthUser(displayName: 'Null', uid: 'null');
     } on Exception catch(e) {
-      return AuthUserModel(displayName: 'Null', uid: 'null');
+      return AuthUser(displayName: 'Null', uid: 'null');
     }
   }
 
@@ -68,12 +68,12 @@ class FirebaseAuthRepository implements IAuth {
 
 
   // callback to set authenticated user attribute based on changes in _auth
-  AuthUserModel? _userFromFirebase(User? user) {
+  AuthUser? _userFromFirebase(User? user) {
     if (user == null) {
-      _authenticatedUser = AuthUserModel(uid: 'null', displayName: 'Null', email: 'null');
+      _authenticatedUser = AuthUser(uid: 'null', displayName: 'Null', email: 'null');
       return _authenticatedUser;
     } else {
-      _authenticatedUser = AuthUserModel(
+      _authenticatedUser = AuthUser(
         uid: user.uid,
         displayName: user.displayName,
         email: user.email,
