@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' as Fb;
 import 'package:todo/auth/models/status.dart';
-import 'package:todo/auth/models/auth_user_models.dart';
+import 'package:todo/auth/models/user.dart';
 
 
 /*
@@ -19,12 +19,12 @@ Remove or add more status for UI or widgets to listen to.
 
 class FirebaseAuthViewModel extends ChangeNotifier {
   // attributes
-  late FirebaseAuth _auth;
+  late Fb.FirebaseAuth _auth;
   Status _status = Status.Uninitialised;
 
   // constructor
   FirebaseAuthViewModel() {
-    _auth = FirebaseAuth.instance;
+    _auth = Fb.FirebaseAuth.instance;
     _auth.authStateChanges().listen(onAuthStateChanged); // subscribe to authentication state changes
   }
 
@@ -34,7 +34,7 @@ class FirebaseAuthViewModel extends ChangeNotifier {
 
 
   // create user object based on given user
-  User _userFromFirebase(User? user) {
+  User _userFromFirebase(Fb.User? user) {
     if (user == null) {
       return User(
           uid: 'null',
@@ -51,7 +51,7 @@ class FirebaseAuthViewModel extends ChangeNotifier {
   }
 
   // detect live auth changes such as user sign in or sign out
-  Future<void> onAuthStateChanged(User? firebaseUser) async {
+  Future<void> onAuthStateChanged(Fb.User? firebaseUser) async {
     if (firebaseUser == null) {
       _status = Status.Unauthenticated;
     } else {
@@ -66,12 +66,12 @@ class FirebaseAuthViewModel extends ChangeNotifier {
     try {
       _status = Status.Registering;
       notifyListeners();
-      final UserCredential result = await _auth.createUserWithEmailAndPassword(
+      final Fb.UserCredential result = await _auth.createUserWithEmailAndPassword(
         email: userEmail,
         password: userPassword
       );
       return _userFromFirebase(result.user);
-    } on FirebaseAuthException catch(e) {
+    } on Fb.FirebaseAuthException catch(e) {
       print("Error on the new user registration = " + e.toString());
       _status = Status.Unauthenticated;
       notifyListeners();

@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart' as fb;
-import 'package:todo/auth/models/auth_user_models.dart';
+import 'package:todo/auth/models/user.dart';
 import 'package:todo/auth/repo/auth_interface.dart';
 
 
