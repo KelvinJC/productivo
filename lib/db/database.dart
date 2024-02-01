@@ -56,7 +56,7 @@ class DB {
            phone_number TEXT,
            photo_url TEXT,
            is_active INTEGER,
-           UNIQUE(uid)
+           UNIQUE(uid, email)
            )
         '''
        );
