@@ -9,7 +9,8 @@ abstract class IAuth {
 }
 
 
-// NOTES on using Object Oriented Interface and Factory Design Pattern
+// NOTES
+// on using Object Oriented Interface and Factory Design Pattern
 // to achieve separation of concerns plus loose coupling and high cohesion
 // in authentication flow of Productive mobile app:
 //
