@@ -1,12 +1,12 @@
 import 'dart:async';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' as Fb;
 import 'package:todo/auth/models/auth_user_models.dart';
 import 'package:todo/auth/repo/auth_interface.dart';
 
 
 class FirebaseAuthRepository implements IAuth {
   // attributes
-  late final FirebaseAuth _auth;
+  late final Fb.FirebaseAuth _auth;
   User? _authenticatedUser;
 
   // constructor
@@ -15,16 +15,14 @@ class FirebaseAuthRepository implements IAuth {
   // getters
   @override
   User? get authenticatedUser => _authenticatedUser;
-
   Stream<User?> get user => _auth.authStateChanges().map(_userFromFirebase);
-
 
 
   // sign up new user
   @override
   Future<User> signUpWithEmailAndPassword(String userEmail, String userPassword) async {
     try {
-      UserCredential result = await _auth.createUserWithEmailAndPassword(email: userEmail, password: userPassword);
+      Fb.UserCredential result = await _auth.createUserWithEmailAndPassword(email: userEmail, password: userPassword);
       return User(
           uid: result.user!.uid,
           displayName: result.user!.displayName,
@@ -32,7 +30,7 @@ class FirebaseAuthRepository implements IAuth {
           phoneNumber: result.user!.phoneNumber,
           photoUrl: result.user!.photoURL
       );
-    } on FirebaseAuthException catch(e) {
+    } on Fb.FirebaseAuthException catch(e) {
       print("Error on the new user registration = $e");
       return User(displayName: 'Null', uid: 'null');
     } on Exception catch(e) {
@@ -68,7 +66,7 @@ class FirebaseAuthRepository implements IAuth {
 
 
   // callback to set authenticated user attribute based on changes in _auth
-  User? _userFromFirebase(User? user) {
+  User? _userFromFirebase(Fb.User? user) {
     if (user == null) {
       _authenticatedUser = User(uid: 'null', displayName: 'Null', email: 'null');
       return _authenticatedUser;
