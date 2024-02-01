@@ -13,7 +13,8 @@ class User {
     this.email,
     this.displayName,
     this.phoneNumber,
-    this.photoUrl
+    this.photoUrl,
+    this.isActive
   });
 
   Map<String, dynamic> toMap() {
