@@ -38,7 +38,9 @@ class AuthViewModel extends ChangeNotifier {
 
 
   // constructor
-  AuthViewModel(this._authRepository);
+  AuthViewModel(this._authRepository) {
+    checkUserStatus();
+  }
 
   // getters
   Status get status => _status;
@@ -46,15 +48,20 @@ class AuthViewModel extends ChangeNotifier {
 
   // setters
   // may rename to checkUserStatus
-  void setUserStatus() {
-    if (_authRepository.authenticatedUser!.uid == 'null') {
+
+  void checkUserStatus() {
+    final authUser = _authRepository.authenticatedUser;
+    if (authUser == null) {
+      _status = Status.Unauthenticated;
+    } else if (authUser.uid == 'null') {
       _status = Status.Unauthenticated;
     } else {
+      print('User is Authenticated (uid: ${authUser.uid})');
       _status = Status.Authenticated;
     }
+
     notifyListeners();
   }
-
 
   // **
   // NOTE:
@@ -80,7 +87,7 @@ class AuthViewModel extends ChangeNotifier {
     }
   }
 
-  void signInWithEmailAndPassword(String userEmail, String userPassword) async {
+  Future<void> signInWithEmailAndPassword(String userEmail, String userPassword) async {
     _status = Status.Authenticating;
     notifyListeners();
     bool signedIn = await _authRepository.signInWithEmailAndPassword(userEmail, userPassword);
@@ -95,6 +102,13 @@ class AuthViewModel extends ChangeNotifier {
         notifyListeners();
       }
     }
+
+  // sign out user
+  Future signOut() async {
+    _authRepository.signOut();
+    _status = Status.Unauthenticated;
+    notifyListeners();
+  }
 
   // void _setCurrentLoggedInUser(String userEmail) async {
   //   try {
