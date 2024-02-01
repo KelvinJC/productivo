@@ -20,27 +20,25 @@ class SwitchScreen extends StatelessWidget {
     AuthViewModel authViewModel = context.watch<AuthViewModel>();
     switch (authViewModel.status) {
       case Status.Authenticated:
-        return BottomNavBar(); // HomePage(); //EventsList(); //  NewTodo();/ AddTodoScreen() ///;
+        return const BottomNavBar(); // HomePage(); //EventsList(); //  NewTodo();/ AddTodoScreen() ///;
       case Status.Unauthenticated:
-        return LoginScreen();
+        return const LoginScreen();
       case Status.Authenticating:
-        return LoginScreen(); //SplashScreen();
+        return const LoginScreen(); //SplashScreen();
       case Status.Uninitialised:
         // first time user should be taken through the intro flow
         // then sign up
         return Scaffold(
           body: SafeArea(
-            child: Container(
-              child: Center(
-                child: Text(
-                  'User is never to see the Uninitialised Screen!',
-                  style: GoogleFonts.montserrat(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 40,
-                      color: Colors.black
-                  ),
+            child: Center(
+              child: Text(
+                'User is never to see the Uninitialised Screen!',
+                style: GoogleFonts.montserrat(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 40,
+                    color: Colors.black
                 ),
-              )
+              ),
             ),
           ),
         );
