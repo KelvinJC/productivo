@@ -52,7 +52,7 @@ class EventsList extends StatelessWidget {
                   future: saveEvent.getEventsMostRecentFirst(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const qCenter(child: CircularProgressIndicator());
+                      return const Center(child: CircularProgressIndicator());
                     } else if (snapshot.hasError) {
                       return  Text('Error: ${snapshot.error}');
                     } else {
