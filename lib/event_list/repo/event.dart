@@ -10,6 +10,8 @@ class EventRepository implements IEventRepository {
   final DB _db;
 
   const EventRepository(this._db);
+  // TODO: Make all queries of events to be specific to logged in user
+  // TODO: add where clause where uid = "user's uid" to all queries
 
   @override
   Future<List<Event>> getAll() async {
