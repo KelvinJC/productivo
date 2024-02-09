@@ -273,7 +273,9 @@ class SignUpScreen extends StatelessWidget {
                       if (signUpFormValid) {
                         authViewModel.signUpWithEmailAndPassword(
                             validationViewModel.email.value!,
-                            validationViewModel.password.value!
+                            validationViewModel.password.value!,
+                            validationViewModel.name.value!,
+                            validationViewModel.phoneNumber.value!
                         );
                         validationViewModel.freezeSignUpButtonColor();
                       }
