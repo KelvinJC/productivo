@@ -49,7 +49,6 @@ class DB {
         await db.execute(
         '''
          CREATE TABLE user(
-           id INTEGER AUTOINCREMENT NOT NULL,
            uid TEXT PRIMARY KEY,
            email TEXT,
            display_name TEXT,
