@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import '../repo/event_interface.dart';
 
 
-class EventViewModel extends ChangeNotifier{
+class SelectTimeDateViewModel extends ChangeNotifier{
 
   bool _isStartDateCalendarVisible = false;
   bool _isEndDateCalendarVisible = false;
