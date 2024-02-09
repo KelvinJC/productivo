@@ -1,11 +1,123 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:todo/event_list/view_models/display_events_view_model.dart';
 import 'package:todo/event_list/views/add_event_screen.dart';
-
 import '../../components/todo_list_row.dart';
+import '../models/event_model.dart';
+
+
+class EventsList extends StatelessWidget {
+  const EventsList({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    DisplayEventsViewModel saveEvent = context.watch<DisplayEventsViewModel>();
+
+    return Scaffold(
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: Column(
+            children: [
+              const SizedBox(height: 20,),
+              Container(
+                height: 330,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  color: Colors.black87,
+                ),
+                child: const EventsListCalendar()
+              ),
+              const SizedBox(height: 20,),
+              Row(
+                children: [
+                  Text(
+                      'Events',
+                      style: GoogleFonts.montserrat(
+                        fontSize: 15,
+                        color: Colors.black87,
+                      )
+                  ),
+                ],
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 5.0),
+                child: Divider(),
+              ),
+              Expanded(
+                child: FutureBuilder<List<Event>>(
+                  future: saveEvent.getEventsMostRecentFirst(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const qCenter(child: CircularProgressIndicator());
+                    } else if (snapshot.hasError) {
+                      return  Text('Error: ${snapshot.error}');
+                    } else {
+                      List<Event> events = snapshot.data!;
+                      return ListView.separated(
+                        padding: const EdgeInsets.only(top: 5.0, bottom: 15.0),
+                        itemCount: events.length,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                            child: GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const AddTodoScreen(),
+                                    ),
+                                  );
+                                },
+                                child: EventListRow(
+                                  index: index,
+                                  title: events[index].title,
+                                  start: events[index].start,
+                                  end: events[index].end,
+                                  category: events[index].category,
+                                )// TodoListRow(index: index)
+                            ),
+                          );
+                        },
+                        separatorBuilder: (context, index) => Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                          child: Divider(
+                            color: Colors.grey[200],
+                          ),
+                        ),
+                      );
+                    }
+                  },
+                )
+              ),
+            ],
+          ),
+        ),
+      ),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(right: 10.0),
+        child: FloatingActionButton(
+          backgroundColor: Colors.black,
+          foregroundColor: Colors.white70,
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const AddTodoScreen(),
+              ),
+            );
+          },
+          child: const Icon(Icons.add),
+        ),
+      ),
+    );
+  }
+}
+
+
 
 class EventsListCalendar extends StatelessWidget {
   const EventsListCalendar({super.key});
@@ -104,96 +216,4 @@ class EventsListCalendar extends StatelessWidget {
     );
   }
 }
-
-
-
-class EventsList extends StatelessWidget {
-  const EventsList({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: Column(
-            children: [
-              const SizedBox(height: 20,),
-              Container(
-                height: 330,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  color: Colors.black87,
-                ),
-                child: const EventsListCalendar()
-              ),
-              const SizedBox(height: 20,),
-              Row(
-                children: [
-                  Text(
-                      'Events',
-                      style: GoogleFonts.montserrat(
-                        fontSize: 15,
-                        color: Colors.black87,
-                      )
-                  ),
-                ],
-              ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 5.0),
-                child: Divider(),
-              ),
-              Expanded(
-                child: ListView.separated(
-                    padding: const EdgeInsets.only(top: 5.0, bottom: 15.0),
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                        child: GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const AddTodoScreen(),
-                                ),
-                              );
-                            },
-                            child: TodoListRow(index: index)),
-                      );
-                    },
-                    separatorBuilder: (context, index) => Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                      child: Divider(
-                        color: Colors.grey[200],
-                      ),
-                    ),
-                    itemCount: 10
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(right: 10.0),
-        child: FloatingActionButton(
-          backgroundColor: Colors.black,
-          foregroundColor: Colors.white70,
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const AddTodoScreen(),
-              ),
-            );
-          },
-          child: const Icon(Icons.add),
-        ),
-      ),
-    );
-  }
-}
-
-
 
