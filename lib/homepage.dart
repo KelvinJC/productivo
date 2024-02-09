@@ -105,6 +105,12 @@ List  completedTasks = [
   '78'
 ];
 
+String capitalizeFirstLetter(String input) {
+  return input.replaceAllMapped(
+      RegExp(r'\b\w'),
+          (match) => match.group(0)!.toUpperCase() +
+          match.group(0)!.substring(1).toLowerCase());
+}
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -112,6 +118,8 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AuthViewModel authViewModel = context.watch<AuthViewModel>();
+    String? displayName = authViewModel.currentUser?.displayName ?? 'User  ';
+    String userDisplayName = capitalizeFirstLetter(displayName);
     LoginValidationViewModel loginValidationViewModel = context.watch<LoginValidationViewModel>();
 
     return Scaffold(
@@ -119,87 +127,49 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.grey[200],
         surfaceTintColor: Colors.transparent,
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 20.0),
-          child: GestureDetector(
-            onTap: () {
-              loginValidationViewModel.changeUserLoggedOut();
-              authViewModel.signOut();
-            },
-            child: const CircleAvatar(
-              radius: 50,
-              backgroundImage: AssetImage('assets/images/beach3.png'),
-            ),
+        elevation: 0, // To remove the shadow
+        leadingWidth: 300.0, // Customize the width of the leading widget
+        // toolbarHeight: 50.0, // Customize the height of the entire app bar
+        leading: GestureDetector(
+          onTap: () {
+            loginValidationViewModel.changeUserLoggedOut();
+            authViewModel.signOut();            },
+          child: Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0, bottom: 8.0),
+                child: const CircleAvatar(
+                  radius: 40, // Adjust the radius as needed
+                  backgroundImage: AssetImage('assets/images/beach3.png'),
+                ),
+              ),
+              Text(
+                'Hi $userDisplayName',
+                style: GoogleFonts.montserrat(
+                  fontSize: 18, // Adjust the font size as needed
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
           ),
         ),
         actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 180.0),
-            child: Text(
-              'Hi Kelvin',
-              style: GoogleFonts.montserrat(
-                fontSize: 20,
-                fontWeight: FontWeight.bold
-              ),
+          IconButton(
+            onPressed: () {
+              // Handle notification icon tap
+            },
+            icon: Icon(
+              Icons.notifications_none_outlined,
+              color: Colors.grey[600],
+              size: 40.0,
             ),
           ),
-          Icon(
-            color: Colors.grey[600],
-            Icons.notifications_none_outlined,
-            size:30.0,
-          ),
-          SizedBox(width: 25,),
-          // Icon(
-          //   color: Colors.grey[600],
-          //   Icons.message_outlined,
-          //   size: 30.0,
-          // ),
-          // SizedBox(width: 25,),
 
+
+          const SizedBox(width: 25),
+          // Add more actions as needed
         ],
       ),
-      // bottomNavigationBar: BottomNavigationBar(
-      //   iconSize: 20.0,
-      //   backgroundColor: Colors.white,
-      //   type: BottomNavigationBarType.fixed,
-      //   items: const [
-      //     BottomNavigationBarItem(
-      //       icon: Icon(
-      //           color: Colors.black54,
-      //           Icons.home_filled
-      //       ),
-      //       label: ''
-      //     ),
-      //     BottomNavigationBarItem(
-      //         icon: Icon(
-      //             color: Colors.black,
-      //             Icons.calendar_month),
-      //         label: ''
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(
-      //
-      //         Icons.add_box_outlined
-      //       ),
-      //       label: 'Add'
-      //     ),
-      //     BottomNavigationBarItem(
-      //         icon: Icon(
-      //
-      //             Icons.view_list_rounded
-      //         ),
-      //         label: 'Boards'
-      //     ),
-      //     BottomNavigationBarItem(
-      //         icon: Icon(
-      //             color: Colors.black54,
-      //
-      //             Icons.person
-      //         ),
-      //         label: 'Profile'
-      //     ),
-      //   ],
-      // ),
       body: Column(
         children: [
           GreetUserCard(),
@@ -288,3 +258,110 @@ class HomePage extends StatelessWidget {
     );
   }
 }
+
+//
+//
+// appBar: AppBar(
+// backgroundColor: Colors.grey[200],
+// surfaceTintColor: Colors.transparent,
+// leading: Padding(
+// padding: const EdgeInsets.only(left: 20.0),
+// child: GestureDetector(
+// onTap: () {
+//
+// },
+// child: Row(
+// mainAxisAlignment: MainAxisAlignment.start,
+// children: [
+// const CircleAvatar(
+// radius: 50,
+// backgroundImage: AssetImage('assets/images/b.png'),
+// ),
+// Text(
+// 'Hi $userDisplayName yyy',
+// style: GoogleFonts.montserrat(
+// fontSize: 20,
+// fontWeight: FontWeight.bold
+// ),
+// ),
+// ],
+// )
+// ),
+// ),
+// actions: [
+//
+// Icon(
+// color: Colors.grey[600],
+// Icons.notifications_none_outlined,
+// size:30.0,
+// ),
+// SizedBox(width: 25,),
+//
+//
+// ],
+// ),
+
+
+
+
+
+
+
+// AppBar(
+// backgroundColor: Colors.grey[200],
+// surfaceTintColor: Colors.transparent,
+// leading: Padding(
+// padding: const EdgeInsets.only(left: 20.0),
+// child: GestureDetector(
+// onTap: () {
+// loginValidationViewModel.changeUserLoggedOut();
+// authViewModel.signOut();
+// },
+// child: Row(
+// mainAxisAlignment: MainAxisAlignment.start,
+// children: [
+// const CircleAvatar(
+// radius: 50,
+// backgroundImage: AssetImage('assets/images/beach3.png'),
+// ),
+// Text(
+// 'Hi $userDisplayName yyy',
+// style: GoogleFonts.montserrat(
+// fontSize: 20,
+// fontWeight: FontWeight.bold
+// ),
+// ),
+// ],
+// )
+// ),
+// ),
+// actions: [
+// // Padding(
+// // padding: const EdgeInsets.only(right: 180.0),
+// // child:
+//
+// // Text(
+// //   'Hi $userDisplayName yyy',
+// //   style: GoogleFonts.montserrat(
+// //     fontSize: 20,
+// //     fontWeight: FontWeight.bold
+// //   ),
+// // ),
+// // ),
+// Icon(
+// color: Colors.grey[600],
+// Icons.notifications_none_outlined,
+// size:30.0,
+// ),
+// SizedBox(width: 25,),
+// // Icon(
+// //   color: Colors.grey[600],
+// //   Icons.message_outlined,
+// //   size: 30.0,
+// // ),
+// // SizedBox(width: 25,),
+//
+// ],
+// ),
+
+
