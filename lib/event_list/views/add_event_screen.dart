@@ -760,6 +760,7 @@ class AddTodoScreen extends StatelessWidget {
 
                     },
                     child: Container(
+                      height: 80,
                       padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
                         color: Colors.black,
