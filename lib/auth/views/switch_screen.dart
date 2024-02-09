@@ -32,7 +32,7 @@ class SwitchScreen extends StatelessWidget {
           body: SafeArea(
             child: Center(
               child: Text(
-                'User is never to see the Uninitialised Screen!',
+                'App Loading Screen!',
                 style: GoogleFonts.montserrat(
                     fontWeight: FontWeight.bold,
                     fontSize: 40,
