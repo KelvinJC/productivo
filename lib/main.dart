@@ -8,10 +8,12 @@ import 'package:todo/auth/repo/user.dart';
 import 'package:todo/auth/view_models/auth_view_model2.dart';
 import 'package:todo/auth/views/switch_screen.dart';
 import 'package:todo/components/calendar/view_models/calendar_view_model.dart';
+import 'package:todo/event_list/view_models/display_events_view_model.dart';
+import 'package:todo/event_list/view_models/save_event_view_model.dart';
 import 'package:todo/firebase_options.dart';
 import 'package:todo/event_list/view_models/category_view_model.dart';
 import 'package:todo/event_list/view_models/location_view_model.dart';
-import 'package:todo/event_list/view_models/event_view_model.dart';
+import 'package:todo/event_list/view_models/select_time_and_date_view_model.dart';
 import 'package:todo/validation/view_models/login_validation.dart';
 import 'package:todo/validation/view_models/signup_validation.dart';
 
@@ -67,8 +69,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<ClockViewModel>(
             create: (_) => ClockViewModel()
         ),
-        ChangeNotifierProvider<EventViewModel>(
-            create: (_) => EventViewModel(EventRepository(db))
+        ChangeNotifierProvider<SelectTimeDateViewModel>(
+            create: (_) => SelectTimeDateViewModel()
         ),
         ChangeNotifierProvider<CalendarViewModel>(
             create: (_) => CalendarViewModel()
@@ -78,6 +80,12 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<LocationViewModel>(
             create: (_) => LocationViewModel()
+        ),
+        ChangeNotifierProvider<SaveEvent>(
+            create: (_) => SaveEvent(EventRepository(db))
+        ),
+        ChangeNotifierProvider<DisplayEventsViewModel>(
+            create: (_) => DisplayEventsViewModel(EventRepository(db))
         ),
       ],
       child: MaterialApp(
