@@ -755,6 +755,32 @@ class AddTodoScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 20,),
+                  GestureDetector(
+                    onTap: () {
+
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Center(
+                        // child: authViewModel.status == Status.Authenticating
+                        //     ? CircularProgressIndicator(color: Colors.white)
+                            child : Text(
+                          'Save',
+                          style: GoogleFonts.montserrat(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey[200]
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20,),
+
                 ],
               ),
             ),
