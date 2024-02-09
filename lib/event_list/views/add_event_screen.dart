@@ -9,7 +9,8 @@ import 'package:todo/components/clock/view_models/clock_view_model.dart';
 import 'package:todo/components/category_button.dart';
 import 'package:todo/event_list/view_models/category_view_model.dart';
 import 'package:todo/event_list/view_models/location_view_model.dart';
-import 'package:todo/event_list/view_models/event_view_model.dart';
+import 'package:todo/event_list/view_models/select_time_and_date_view_model.dart';
+import 'package:todo/event_list/view_models/save_event_view_model.dart';
 
 
 
@@ -20,7 +21,7 @@ class AddTodoScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     print('building');
     // providers
-    EventViewModel eventViewModel = context.watch<EventViewModel>();
+    SelectTimeDateViewModel eventViewModel = context.watch<SelectTimeDateViewModel>();
     CalendarViewModel calendarViewModel = context.watch<CalendarViewModel>();
     ClockViewModel clockViewModel = context.watch<ClockViewModel>();
     CategoryViewModel categoryViewModel = context.watch<CategoryViewModel>();
@@ -48,6 +49,8 @@ class AddTodoScreen extends StatelessWidget {
     // remove keyboard when user clicks outside textbox
     // SystemChannels.textInput.invokeMethod('TextInput.hide');
 
+    // save event
+    SaveEvent saveEvent = context.watch<SaveEvent>();
 
     return Scaffold(
       backgroundColor: Colors.grey[200],
@@ -83,7 +86,9 @@ class AddTodoScreen extends StatelessWidget {
                   // title input field
                   TextFormField(
                     // maxLength: 60,
-
+                    onChanged: (String titleVal) {
+                      saveEvent.changeTitle(titleVal);
+                    },
                     style: GoogleFonts.montserrat(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
@@ -176,7 +181,7 @@ class AddTodoScreen extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(15),
                                     color: Colors.black,
                                   ),
-                                  child: Container(),
+                                  child: startCal,
                                 ),
                                 const Padding(
                                   padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
@@ -503,7 +508,9 @@ class AddTodoScreen extends StatelessWidget {
                   SizedBox(height: categoryViewModel.categoryFieldSelected ?  20.0 : 0.0,),
                   TextFormField(
                     maxLines: 4,
-
+                    onChanged: (String noteVal) {
+                      saveEvent.changeNote(noteVal);
+                    },
                     onTap: () {
                       locationViewModel.toggleLocationFieldSelected();
                     },
@@ -757,7 +764,12 @@ class AddTodoScreen extends StatelessWidget {
                   const SizedBox(height: 20,),
                   GestureDetector(
                     onTap: () {
-
+                      String startVal = timeBtnSelected ? '$allDayStartDay  $selectedStartTime' : allDayStartDay;
+                      String endVal = timeBtnSelected ? '$selectedEndDay  $selectedEndTime' : allDayEndDay;
+                      saveEvent.changeStart(startVal);
+                      saveEvent.changeEnd(endVal);
+                      saveEvent.changeCategory(categoryViewModel.selectedCategory);
+                      saveEvent.saveEvent();
                     },
                     child: Container(
                       height: 80,
@@ -767,9 +779,9 @@ class AddTodoScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Center(
-                        // child: authViewModel.status == Status.Authenticating
-                        //     ? CircularProgressIndicator(color: Colors.white)
-                            child : Text(
+                        child: saveEvent.saveStatus == 'Saving'
+                            ? const CircularProgressIndicator(color: Colors.white)
+                            : Text(
                           'Save',
                           style: GoogleFonts.montserrat(
                               fontSize: 18,
@@ -781,13 +793,19 @@ class AddTodoScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 20,),
-
                 ],
               ),
             ),
           ),
         ),
       ),
+      // floatingActionButton: Padding(
+      //   padding: const EdgeInsets.only(right: 8.0, left: 40.0),
+      //   child: Container()
+      // ),
     );
   }
 }
+
+
+
