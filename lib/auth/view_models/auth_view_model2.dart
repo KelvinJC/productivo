@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo/auth/models/user.dart';
 import 'package:todo/auth/models/status.dart';
+import 'package:todo/auth/repo/user_interface.dart';
 import '../repo/auth_interface.dart';
 
 
@@ -31,25 +32,32 @@ class AuthViewModel extends ChangeNotifier {
 
   // attributes
   final IAuth _authRepository;
+  final IUserRepository _userRepository;
   Status _status = Status.Uninitialised;
-  late User _signedUpUser;
-  late User _currentUser;
-
+  late User? _currentUser;
 
 
   // constructor
-  AuthViewModel(this._authRepository) {
-    checkUserStatus();
+  AuthViewModel(this._authRepository, this._userRepository) {
+    getActiveUser();
   }
 
   // getters
   Status get status => _status;
-  User get currentUser => _currentUser; // event & todos form widget may watch this attribute to associate each with a user
+  User? get currentUser => _currentUser; // event & todos form widget may watch this attribute to associate each with a user
 
-  // setters
-  // may rename to checkUserStatus
+  void getActiveUser() async {
+    User? activeUser = await _userRepository.getActive();
+    if (activeUser != null) {
+      _status = Status.Authenticated;
+      _currentUser = activeUser;
+    } else {
+      getUserAuthStatus();
+    }
+    notifyListeners();
+  }
 
-  void checkUserStatus() {
+  void getUserAuthStatus() {
     final authUser = _authRepository.authenticatedUser;
     if (authUser == null) {
       _status = Status.Unauthenticated;
@@ -59,8 +67,6 @@ class AuthViewModel extends ChangeNotifier {
       print('User is Authenticated (uid: ${authUser.uid})');
       _status = Status.Authenticated;
     }
-
-    notifyListeners();
   }
 
   // **
@@ -71,30 +77,34 @@ class AuthViewModel extends ChangeNotifier {
   // 2. _currentUser would get set within login method alone
   // **
 
-  void signUpWithEmailAndPassword(String userEmail, String userPassword) async {
+  void signUpWithEmailAndPassword(String userEmail, String userPassword, String name, String phone) async {
     _status = Status.Registering;
     notifyListeners();
-    User user = await _authRepository.signUpWithEmailAndPassword(userEmail, userPassword);
+    User userResponse = await _authRepository.signUpWithEmailAndPassword(userEmail, userPassword);
 
-    if (user.uid != 'null') {
-      _signedUpUser = _currentUser = user;
+    if (userResponse.uid != 'null') {
+      // persist user data
+      User user = User(uid: userResponse.uid, email: userEmail, displayName: name, phoneNumber: phone);
+      await _userRepository.insert(user);
+      // change state
+      _currentUser = user;
       _status = Status.Authenticated;
       notifyListeners();
-      // await _userRepository.insert(user);
     } else {
       _status = Status.Unauthenticated;
       notifyListeners();
     }
   }
 
+
   Future<void> signInWithEmailAndPassword(String userEmail, String userPassword) async {
     _status = Status.Authenticating;
     notifyListeners();
     bool signedIn = await _authRepository.signInWithEmailAndPassword(userEmail, userPassword);
-    // await _setCurrentLoggedInUser(String userEmail);
-    // if (signedIn && _currentUser != null) {
+    await _setCurrentLoggedInUser(userEmail);
+    if (signedIn && _currentUser != null) {
 
-    if (signedIn) {
+    // if (signedIn) {
         _status = Status.Authenticated;
         notifyListeners();
       } else {
@@ -107,18 +117,24 @@ class AuthViewModel extends ChangeNotifier {
   Future signOut() async {
     _authRepository.signOut();
     _status = Status.Unauthenticated;
+    _deactivateLoggedOutUser();
     notifyListeners();
   }
 
-  // void _setCurrentLoggedInUser(String userEmail) async {
-  //   try {
-  //     _currentUser = await userRepository.getOne(userEmail);
-  //   } catch (e) {
-  //     print(e);
-  //     // show snack with "login failed"
-  //   }
-  // }
+  Future<void> _setCurrentLoggedInUser(String userEmail) async {
+    try {
+      _currentUser = await _userRepository.getOne(userEmail);
+      await _userRepository.setActive(_currentUser!);
+    } catch (e) {
+      print(e);
+      // show snack with "login failed"
+    }
+  }
 
+  void _deactivateLoggedOutUser() async {
+    await _userRepository.deactivate(_currentUser!);
+    _currentUser = null;
+  }
 }
 
 
