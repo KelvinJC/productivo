@@ -6,7 +6,7 @@ class User {
   String? displayName;
   String? phoneNumber;
   String? photoUrl;
-  bool?   isActive;
+  int?   isActive;
 
   User({
     required this.uid,
