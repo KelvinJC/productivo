@@ -6,39 +6,6 @@ class TodoListRow extends StatelessWidget {
   final int index;
   const TodoListRow({super.key, required this.index});
 
-  Color? switchColor(int index) {
-    switch (index) {
-      case 1:
-        return Colors.blue[900];
-      case 2:
-        return Colors.red;
-      default:
-        return Colors.green;
-    }
-  }
-
-  String switchBoard(int index) {
-    switch (index) {
-      case 1:
-        return 'Leisure';
-      case 2:
-        return 'Work';
-      default:
-        return 'Sport';
-    }
-  }
-
-  String switchTask(int index) {
-    switch (index) {
-      case 1:
-        return 'Dinner with Jenny';
-      case 2:
-        return 'Merge PR on Task App';
-      default:
-        return 'Run Harcourt marathon';
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -74,7 +41,7 @@ class TodoListRow extends StatelessWidget {
                     ),
                     SizedBox(width: 10,),
                     Text(
-                      switchBoard(index),
+                      switchCategory(index),
                       style: GoogleFonts.montserrat(
                         fontSize: 15,
                       ),
@@ -118,39 +85,6 @@ class EventListRow extends StatelessWidget {
     required this.category
   });
 
-  Color? switchColor(int index) {
-    switch (index) {
-      case 1:
-        return Colors.blue[900];
-      case 2:
-        return Colors.red;
-      default:
-        return Colors.green;
-    }
-  }
-
-  String switchBoard(int index) {
-    switch (index) {
-      case 1:
-        return 'Leisure';
-      case 2:
-        return 'Work';
-      default:
-        return 'Sport';
-    }
-  }
-
-  String switchTask(int index) {
-    switch (index) {
-      case 1:
-        return 'Dinner with Jenny';
-      case 2:
-        return 'Merge PR on Task App';
-      default:
-        return 'Run Harcourt marathon';
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -186,7 +120,7 @@ class EventListRow extends StatelessWidget {
                     ),
                     SizedBox(width: 10,),
                     Text(
-                      switchBoard(index),
+                      switchCategory(index),
                       style: GoogleFonts.montserrat(
                         fontSize: 15,
                       ),
@@ -208,5 +142,40 @@ class EventListRow extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+
+
+Color? switchColor(int index) {
+  switch (index) {
+    case 1:
+      return Colors.blue[900];
+    case 2:
+      return Colors.red;
+    default:
+      return Colors.green;
+  }
+}
+
+String switchCategory(int index) {
+  switch (index) {
+    case 1:
+      return 'Leisure';
+    case 2:
+      return 'Work';
+    default:
+      return 'Sport';
+  }
+}
+
+String switchTask(int index) {
+  switch (index) {
+    case 1:
+      return 'Dinner with Jenny';
+    case 2:
+      return 'Merge PR on Task App';
+    default:
+      return 'Run Harcourt marathon';
   }
 }
